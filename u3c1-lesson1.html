@@ -1,0 +1,607 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nobody Wove It Alone · Lesson 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a2332;--ink-soft:#4a5568;--ink-faint:#8b96a5;--paper:#faf8f4;--paper-2:#f2eee6;
+--line:#ddd6ca;--navy:#1f3a5f;--navy-2:#2e5a8e;--gold:#b8821f;--gold-soft:#f9f0da;
+--green:#2f6b45;--green-soft:#e9f3ec;--rose:#a63d4e;--rose-soft:#fbeaec;--hl:#ffe27a;
+--shadow:0 2px 8px rgba(26,35,50,.07),0 12px 32px rgba(26,35,50,.09);--fs:1}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{font-family:'IBM Plex Sans KR',sans-serif;
+background:radial-gradient(1200px 600px at 15% -10%,#fff 0%,transparent 60%),
+radial-gradient(900px 500px at 100% 0%,#f4efe4 0%,transparent 55%),var(--paper);
+color:var(--ink);min-height:100vh;font-size:calc(17px*var(--fs));line-height:1.7}
+.serif{font-family:'Fraunces',Georgia,serif}
+.topbar{position:sticky;top:0;z-index:60;background:rgba(250,248,244,.94);backdrop-filter:blur(12px);
+border-bottom:1px solid var(--line);padding:10px 18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:12px;margin-right:auto;min-width:0}
+.brand h1{font-family:'Fraunces',serif;font-weight:700;font-size:calc(22px*var(--fs));margin:0;
+color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand .sub{font-size:calc(12.5px*var(--fs));color:var(--ink-faint);white-space:nowrap}
+.tool{border:1.5px solid var(--line);background:#fff;color:var(--ink-soft);border-radius:12px;
+padding:11px 15px;font-size:calc(14px*var(--fs));font-family:inherit;font-weight:600;cursor:pointer;
+display:inline-flex;align-items:center;gap:7px;transition:all .16s;white-space:nowrap;user-select:none;min-height:44px}
+.tool:active{transform:scale(.96)}.tool:hover{border-color:var(--navy-2);color:var(--navy)}
+.tool.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.steps{display:flex;gap:8px;padding:12px 18px 0;flex-wrap:wrap;max-width:1400px;margin:0 auto}
+.step{flex:1 1 130px;border:1.5px solid var(--line);background:#fff;border-radius:14px 14px 0 0;
+padding:12px 14px;cursor:pointer;transition:all .18s;border-bottom:3px solid transparent;
+text-align:left;font-family:inherit;min-height:56px}
+.step:active{transform:scale(.98)}
+.step .n{font-size:calc(11px*var(--fs));color:var(--ink-faint);font-weight:700;letter-spacing:.08em}
+.step .t{font-size:calc(15px*var(--fs));font-weight:600;color:var(--ink-soft);margin-top:1px}
+.step.on{border-color:var(--navy);border-bottom-color:var(--gold);box-shadow:var(--shadow)}
+.step.on .t{color:var(--navy)}
+.wrap{max-width:1400px;margin:0 auto;padding:0 18px 140px}
+.panel{display:none;animation:fade .3s ease}.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 26px;margin:16px 0;box-shadow:var(--shadow)}
+.card-head{display:flex;align-items:center;gap:11px;margin-bottom:4px;flex-wrap:wrap}
+.pill{font-size:calc(12px*var(--fs));font-weight:700;letter-spacing:.05em;padding:5px 12px;
+border-radius:999px;background:var(--paper-2);color:var(--ink-soft)}
+.pill.gold{background:var(--gold-soft);color:var(--gold)}
+.pill.green{background:var(--green-soft);color:var(--green)}
+.pill.rose{background:var(--rose-soft);color:var(--rose)}
+h2.sec{font-family:'Fraunces',serif;font-size:calc(27px*var(--fs));font-weight:600;color:var(--navy);margin:0 0 2px}
+.lede{color:var(--ink-soft);font-size:calc(16px*var(--fs));margin:6px 0 0}
+.sent{font-family:'Fraunces',serif;font-size:calc(21px*var(--fs));line-height:1.75;margin:12px 0;
+cursor:pointer;padding:13px 15px;border-radius:12px;transition:background .15s;border-left:4px solid transparent}
+.sent:hover{background:#fbf9f4;border-left-color:var(--line)}
+.sent.speaking{background:var(--gold-soft);border-left-color:var(--gold)}
+.spk{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;
+background:var(--paper-2);color:var(--navy);margin-right:10px;vertical-align:middle;font-size:15px;border:1px solid var(--line)}
+mark{background:var(--hl);padding:2px 3px;border-radius:4px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.kr{color:var(--ink-soft);font-size:calc(16px*var(--fs));margin:6px 0 0}
+.task{background:#fdfaf3;border:1px solid #eadfc6;border-left:4px solid var(--gold);
+border-radius:12px;padding:15px 17px;margin:13px 0}
+.task .q{font-weight:600;color:#7d5a14;font-size:calc(17px*var(--fs));margin-bottom:4px}
+.btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:11px}
+.btn{border:none;border-radius:11px;padding:12px 18px;font-size:calc(15px*var(--fs));font-weight:600;
+font-family:inherit;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:7px;min-height:46px}
+.btn:active{transform:scale(.96)}
+.btn-a{background:var(--navy);color:#fff}.btn-a:hover{background:var(--navy-2)}
+.btn-c{background:var(--green-soft);color:var(--green);border:1px solid #c8e0d0}
+.btn-g{background:#fff;color:var(--ink-soft);border:1.5px solid var(--line)}
+.btn-g:hover{border-color:var(--navy-2);color:var(--navy)}
+.reveal{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1)}
+.reveal.open{max-height:4000px}
+.answer{margin-top:13px;background:#f4f9f5;border:1px solid #cfe3d5;border-left:4px solid var(--green);
+border-radius:12px;padding:17px 19px}
+.answer h4{margin:0 0 9px;font-size:calc(13px*var(--fs));font-weight:700;color:var(--green);letter-spacing:.06em}
+.answer .big{font-family:'Fraunces',serif;font-size:calc(20px*var(--fs));margin:7px 0;line-height:1.6}
+.answer p{margin:8px 0;color:var(--ink-soft);font-size:calc(16px*var(--fs))}
+.answer .why{background:#fff;border-radius:9px;padding:12px 14px;margin-top:11px;border:1px dashed #cfe3d5;
+color:var(--ink-soft);font-size:calc(15.5px*var(--fs))}
+.answer .why b{color:var(--green)}
+.tf{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--paper-2)}
+.tf:last-child{border-bottom:none}
+.tfn{flex:none;width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;
+display:flex;align-items:center;justify-content:center;font-weight:700;font-size:calc(15px*var(--fs))}
+.tfbody{flex:1;min-width:0}
+.tfstate{flex:none;font-family:'Fraunces',serif;font-weight:700;font-size:calc(26px*var(--fs));
+width:46px;text-align:center;color:var(--ink-faint)}
+.tfstate.T{color:var(--green)}.tfstate.F{color:var(--rose)}
+/* 사슬 */
+.chain{margin-top:16px}
+.link{display:flex;align-items:stretch;gap:0;margin-bottom:6px}
+.lk-lab{flex:none;width:150px;display:flex;align-items:center;justify-content:flex-end;
+padding:0 14px;font-size:calc(13px*var(--fs));font-weight:700;color:var(--ink-faint);text-align:right}
+.lk-lab.first{color:var(--green)}
+.lk-p{flex:none;width:56px;background:#eef2f7;border-radius:10px 0 0 10px;display:flex;
+align-items:center;justify-content:center;font-weight:700;color:var(--navy);font-family:'Fraunces',serif}
+.lk-t{flex:1;border:2px dashed var(--line);border-left:none;border-radius:0 10px 10px 0;
+padding:16px 18px;font-family:'Fraunces',serif;font-size:calc(18px*var(--fs));min-height:62px;
+display:flex;align-items:center;background:#fff}
+.link.given .lk-t{border:2px solid #cfe3d5;border-left:none;background:#f3f9f4}
+.link.given .lk-p{background:#e2ede6}
+.link.filled .lk-t{border:2px solid #e8d5a8;border-left:none;background:#fffbef;color:var(--ink)}
+.link.filled .lk-p{background:#f5ead0}
+.link .placeholder{color:var(--ink-faint);font-style:italic;font-size:calc(16px*var(--fs))}
+.arrow{text-align:center;color:var(--ink-faint);font-size:16px;margin:2px 0 4px;padding-left:150px}
+/* 순서 */
+.ordrow{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin:16px 0 4px}
+.ordcell{text-align:center}
+.ordcell .on{font-size:calc(12.5px*var(--fs));color:var(--faint);font-weight:700;margin-bottom:5px}
+.ordcell .ol{font-family:'Fraunces',serif;font-size:calc(30px*var(--fs));font-weight:700;color:var(--faint);
+background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px 0;transition:all .25s}
+.ordcell .ol.show{color:var(--navy);border-color:var(--gold);background:var(--goldbg)}
+/* 논증 단계 */
+.stage{border:1.5px solid var(--line);border-radius:14px;padding:14px 18px;margin-top:10px;background:#fff}
+.stage.given{background:#f3f9f4;border-color:#cfe3d5}
+.shead{display:flex;align-items:center;gap:12px}
+.stag{font-family:'Fraunces',serif;font-weight:700;font-size:calc(15px*var(--fs));color:var(--navy);flex:1}
+.stag span{font-family:'IBM Plex Sans KR',sans-serif;font-weight:400;color:var(--faint);font-size:calc(13px*var(--fs));margin-left:8px}
+.spara{font-size:calc(13px*var(--fs));font-weight:700;color:var(--gold);background:var(--goldbg);padding:3px 10px;border-radius:999px}
+.sq{font-family:'Fraunces',serif;font-style:italic;color:var(--soft);font-size:calc(15.5px*var(--fs));margin-top:8px}
+.sa{font-family:'Fraunces',serif;font-size:calc(17px*var(--fs));margin-top:8px;color:var(--faint);min-height:1.4em}
+.sa.show{color:var(--ink)}
+.sev{margin-top:12px;border-top:1px dashed var(--line);padding-top:12px}
+.sevp{display:flex;gap:10px;margin-bottom:8px}
+.sevn{flex:none;font-size:calc(12.5px*var(--fs));font-weight:700;color:var(--gold);padding-top:3px;min-width:30px}
+.sevt{font-family:'Fraunces',serif;font-size:calc(15px*var(--fs));line-height:1.7;color:var(--soft);cursor:pointer}
+.sevt mark{background:#ffe27a;color:var(--ink);padding:1px 3px;border-radius:3px}
+.sevw{margin-top:8px;background:#f4f9f5;border-left:3px solid var(--green);border-radius:8px;padding:10px 13px;
+color:var(--soft);font-size:calc(15px*var(--fs));line-height:1.7}
+.sevw b{color:var(--green)}
+@media(max-width:760px){.ordrow{grid-template-columns:repeat(4,1fr)}}
+/* 타이머 */
+#timer{position:fixed;right:22px;bottom:22px;z-index:200;width:250px;background:#fff;
+border:1.5px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;user-select:none;touch-action:none}
+#timer.hidden{display:none}#timer.mini{width:auto}#timer.mini .tbody{display:none}
+.thead{display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:move;background:var(--navy);color:#fff}
+.thead .lab{font-size:calc(13px*var(--fs));font-weight:700;margin-right:auto}
+.thead button{background:rgba(255,255,255,.16);border:none;color:#fff;width:30px;height:30px;
+border-radius:8px;cursor:pointer;font-size:15px;font-family:inherit;line-height:1}
+#tmini{font-family:'Fraunces',serif;font-size:calc(22px*var(--fs));font-weight:700;display:none;padding:0 4px}
+#timer.mini #tmini{display:block}
+.tbody{padding:14px 14px 16px}
+#tdisp{font-family:'Fraunces',serif;font-size:calc(46px*var(--fs));font-weight:700;text-align:center;color:var(--navy);line-height:1.1}
+#tdisp.warn{color:var(--rose);animation:pulse .7s infinite}
+@keyframes pulse{50%{opacity:.45}}
+.tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
+.tgrid button{border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:9px 0;
+font-family:inherit;font-weight:700;font-size:calc(14px*var(--fs));color:var(--ink-soft);cursor:pointer}
+.tctl{display:flex;gap:7px;margin-top:9px}
+.tctl button{flex:1;border:none;border-radius:10px;padding:11px 0;font-family:inherit;font-weight:700;
+font-size:calc(14px*var(--fs));cursor:pointer;min-height:42px}
+#tgo{background:var(--green);color:#fff}#trs{background:var(--paper-2);color:var(--ink-soft)}
+.modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;
+padding:22px;background:rgba(26,35,50,.5);backdrop-filter:blur(4px)}
+.modal.on{display:flex}
+.mbox{background:var(--paper);border-radius:22px;max-width:920px;width:100%;max-height:88vh;
+display:flex;flex-direction:column;box-shadow:0 30px 70px rgba(0,0,0,.3);overflow:hidden}
+.mhead{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line);background:#fff}
+.mhead h3{margin:0;font-family:'Fraunces',serif;font-size:calc(22px*var(--fs));color:var(--navy);margin-right:auto}
+.mbody{padding:24px 26px;overflow:auto}
+.mpara{font-family:'Fraunces',serif;font-size:calc(20px*var(--fs));line-height:1.85;cursor:pointer}
+.side{position:fixed;top:0;right:0;bottom:0;width:min(560px,92vw);background:var(--paper);
+border-left:1px solid var(--line);z-index:250;transform:translateX(100%);
+transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-14px 0 40px rgba(0,0,0,.12)}
+.side.on{transform:none}
+.side .sbody{padding:20px 24px 60px;overflow:auto}
+.side p.para{font-family:'Fraunces',serif;font-size:calc(18px*var(--fs));line-height:1.85;margin:0 0 16px;
+padding:12px 14px;border-radius:10px;cursor:pointer;border-left:3px solid transparent}
+.side p.para:hover{background:#fff;border-left-color:var(--gold)}
+.side p.para .pn{font-weight:700;color:var(--navy-2);margin-right:8px}
+#pickOut{font-family:'Fraunces',serif;font-size:calc(72px*var(--fs));font-weight:700;color:var(--navy);margin:14px 0;text-align:center}
+#pickOut.roll{color:var(--gold)}
+.inp{border:1.5px solid var(--line);border-radius:10px;padding:11px 14px;font-family:inherit;
+font-size:calc(16px*var(--fs));width:110px;text-align:center}
+.hint{background:var(--green-soft);border-radius:10px;padding:12px 15px;margin-top:12px;
+color:var(--green);font-size:calc(15.5px*var(--fs))}
+.final{background:linear-gradient(135deg,#fff8e6,#fdf1d4);border:1px solid #e8d5a8;border-radius:16px;
+padding:24px 26px;margin-top:14px}
+.final .l{font-family:'Fraunces',serif;font-size:calc(24px*var(--fs));line-height:1.8;text-align:center}
+.hideans .reveal{max-height:0 !important}
+@media(max-width:760px){#timer{right:12px;bottom:12px;width:210px}.card{padding:18px 16px}
+.lk-lab{width:88px;font-size:calc(11px*var(--fs))}.arrow{padding-left:88px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand"><h1 class="serif">Nobody Wove It Alone</h1>
+    <span class="sub">Lesson 1 · Unit 3 Cycle 1 · Common English 2</span></div>
+  <button class="tool" onclick="toggleSide()">📖 지문</button>
+  <button class="tool" onclick="openPick()">🎲 발표자</button>
+  <button class="tool" id="hideBtn" onclick="toggleHide()">🙈 정답 가리기</button>
+  <button class="tool" onclick="fsz(-1)">가⁻</button>
+  <button class="tool" onclick="fsz(1)">가⁺</button>
+  <button class="tool" id="tBtn" onclick="toggleTimer()">⏱ 타이머</button>
+</div>
+<div class="steps" id="steps"></div>
+<div class="wrap">
+
+<div class="panel on" id="p0">
+  <div class="card"><div class="card-head"><span class="pill gold">TODAY</span></div>
+    <h2 class="sec">오늘 우리가 할 일</h2>
+    <p class="lede">1·2단원은 <b>우리</b>에 관한 글이었습니다. 이번 단원은 시선을 돌립니다 — <b>우리가 아닌 쪽에서 보면</b> 어떻게 보일까요?</p>
+    <div style="margin-top:16px" id="planList"></div>
+  </div>
+  <div class="card"><div class="card-head"><span class="pill">이 글의 출발점</span></div>
+    <div class="sent" onclick="say(this)"><span class="spk">🔊</span>Ask almost any people on earth where the story of humanity begins, and they will point, with a straight face, to themselves.</div>
+    <p class="kr">지구상 거의 어떤 민족에게든 인류의 이야기가 어디서 시작되는지 물어보라. 그들은 태연한 얼굴로 자기 자신을 가리킬 것이다.</p>
+    <div class="hint">중국도, 그리스도, 영국도 그랬습니다. <b>우리도 그럴까요?</b></div>
+  </div>
+</div>
+
+<div class="panel" id="p1">
+  <div class="card"><div class="card-head"><span class="pill green">CHECK</span><span class="pill">4분</span></div>
+    <h2 class="sec">T/F 확인</h2>
+    <p class="lede"><b>사전과제 학습지</b>에 바로 정답을 표시하고 고치세요. 정답보다 <b>근거가 어디에 있었는지</b>가 중요합니다. 지문에 밑줄 친 곳과 맞춰 보세요.</p>
+    <div id="tfList" style="margin-top:14px"></div>
+    <div class="btnrow" style="margin-top:18px">
+      <button class="btn btn-a" onclick="allTF()">전체 정답 공개</button>
+      <button class="btn btn-g" onclick="resetTF()">다시 가리기</button></div>
+  </div>
+  <div class="card" style="border-left:5px solid var(--gold)">
+    <div class="card-head"><span class="pill gold">ORDER</span><span class="pill">3분</span></div>
+    <h2 class="sec">문단 순서 — 몇 개 맞았나요?</h2>
+    <p class="lede">사전과제 학습지의 순서 칸을 확인하고 틀린 것에 동그라미 치세요. <b>왜 그 순서인지</b>는 Part 2에서 봅니다.</p>
+    <div class="ordrow" id="ordRow"></div>
+    <div class="btnrow">
+      <button class="btn btn-a" onclick="showOrder()">정답 공개</button>
+      <button class="btn btn-g" onclick="tog('ordHint')">많이 틀리는 곳</button></div>
+    <div class="reveal" id="ordHint">
+      <div class="answer"><h4>자주 바뀌는 두 쌍</h4>
+        <p><b>F(¶3) ↔ G(¶6)</b> — 둘 다 "이야기가 틀렸다 / 성취는 공유된 것"처럼 보입니다. 그런데 ¶3은 <b>문제 제기</b>, ¶6은 예시를 거친 뒤의 <b>정리</b>입니다.</p>
+        <p><b>H(¶4) ↔ A(¶5)</b> — ¶5 첫 문장이 단서입니다. <i>The same is true of the things we are proudest of.</i> 평범한 것(0) 다음에 자랑스러운 것(인권)이 옵니다.</p>
+        <div class="why">여기서는 손들기만 하고 넘어갑니다. 이유는 Part 2에서 다룹니다.</div>
+      </div></div>
+  </div>
+</div>
+
+<div class="panel" id="p2">
+  <div class="card"><div class="card-head"><span class="pill gold">PART 1</span><span class="pill">15분</span></div>
+    <h2 class="sec">Cracking Hard Sentences</h2>
+    <p class="lede">먼저 스스로 풀어 보고, 그다음 함께 뜯어봅니다. 문장을 누르면 원어민 발음이 나옵니다.</p></div>
+  <div id="hardList"></div>
+</div>
+
+<div class="panel" id="p3">
+  <div class="card"><div class="card-head"><span class="pill green">PART 2</span><span class="pill">13분</span></div>
+    <h2 class="sec">논증은 어떻게 지어졌나</h2>
+    <p class="lede">집에서 순서를 맞췄습니다. 이제 <b>왜 그 순서여야 하는지</b>를 말해 봅니다. 한 칸은 채워져 있습니다.</p>
+    <div id="stageList"></div>
+    <div class="btnrow" style="margin-top:16px">
+      <button class="btn btn-a" onclick="allStages()">전체 공개</button>
+      <button class="btn btn-g" onclick="showP(3)">📄 ¶3</button>
+      <button class="btn btn-g" onclick="showP(6)">📄 ¶6</button>
+      <button class="btn btn-g" onclick="showP(8)">📄 ¶8</button></div>
+    <div class="reveal" id="stageWhy">
+      <div class="answer"><h4>다섯 번째 읽기 도구</h4>
+        <p>반복되는 대비 → 인과의 사슬 → 통념과 반박 → 비유가 깨지는 곳, 그리고 이번은 <b>논증의 뼈대</b>입니다. 주장 · 문제 · 예시 · 일반화 · 왜 중요한가 · 대안.</p>
+        <p>가장 흔한 논설문 구조라, 앞으로 다른 글을 읽을 때도 바로 쓸 수 있습니다.</p>
+        <div class="why"><b>순서가 바뀌면 왜 안 되나</b> — ¶3을 ¶6 뒤로 보내면 예시 없이 결론부터 나오게 됩니다. ¶5를 ¶4 앞에 두면 "평범한 것부터, 그다음 자랑스러운 것"이라는 상승이 사라집니다.</div>
+      </div></div>
+  </div>
+  <div class="card"><div class="card-head"><span class="pill gold">착지</span></div>
+    <h2 class="sec">그래서 필자의 요점은</h2>
+    <div class="final">
+      <div class="l">Every culture puts itself at the centre, and that is natural because <span class="bl" id="cb1">?</span><br>
+      But it is a problem because <span class="bl" id="cb2">?</span></div></div>
+    <div class="btnrow" style="justify-content:center">
+      <button class="btn btn-a" onclick="fillPoint()">정답 공개</button>
+      <button class="btn btn-g" onclick="sayText('Every culture puts itself at the centre, and that is natural because belonging holds a community together. But it is a problem because pride in what we invented slides into contempt for others.')">🔊 읽어주기</button></div>
+    <div class="reveal" id="pointWhy">
+      <div class="answer"><h4>한 문장으로</h4>
+        <p class="kr">모든 문화가 자기를 중심에 두는 것은 <b>소속감이 공동체를 묶기 때문에</b> 자연스럽다. 그러나 <b>자부심이 남에 대한 경멸로 미끄러지기 때문에</b> 문제다.</p>
+        <div class="why"><b>1단원과 나란히 놓으면</b> — 그때는 "소속감이 공동체를 만든다"였습니다. 이번은 "그 소속감이 어떻게 남을 밀어내는가"입니다. 같은 힘의 두 얼굴이죠.</div>
+      </div></div>
+  </div>
+</div>
+
+<div class="panel" id="p4">
+  <div class="card" style="border-left:5px solid var(--green)">
+    <div class="card-head"><span class="pill green">THEME</span><span class="pill">7분</span></div>
+    <h2 class="sec">주제 정리</h2>
+    <p class="lede">착지 문장을 다시 보고, 주제를 한 줄로 정리합니다. 학습지 Wrap-Up 칸에 받아 적으세요.</p>
+    <div class="sent" onclick="say(this)"><span class="spk">🔊</span>Achievements are shared before they are owned.</div>
+    <p class="kr">성취는 소유되기 전에 먼저 공유된 것이다. <span style="color:var(--navy2)">(¶6)</span></p>
+    <div class="btnrow"><button class="btn btn-c" onclick="tog('themeBox')">주제 한 줄 보기</button></div>
+    <div class="reveal" id="themeBox">
+      <div class="answer"><h4>주제</h4>
+        <div class="big serif" onclick="say(this)"><span class="spk">🔊</span>Every culture puts itself at the centre. That keeps it together, but it is almost always wrong — and the cure is not shame, but seeing your story as one thread in a cloth nobody wove alone.</div>
+        <p class="kr">모든 문화는 자기를 중심에 둔다. 그것이 공동체를 묶어 주지만 거의 언제나 틀렸다 — 그리고 처방은 수치심이 아니라, 내 이야기를 아무도 혼자 짜지 않은 천 속의 한 올로 보는 것이다.</p>
+        <div class="why"><b>세 가지가 들어 있으면 됩니다</b> — 자연스럽다 / 그러나 틀렸다 / 대안은 수치심이 아니다. 여러분 표현으로 바꿔 적어도 좋습니다.</div>
+      </div></div>
+  </div>
+  <div class="card"><div class="card-head"><span class="pill">NEXT</span></div>
+    <h2 class="sec">다음 시간</h2>
+    <div class="sent" onclick="say(this)"><span class="spk">🔊</span>Your thread is still yours; it is simply not the whole cloth.</div>
+    <p class="kr">여러분이 만들어 온 질문으로 시작하고, <b>다른 사람의 자리에 서 보는</b> 역할극을 합니다.</p>
+  </div>
+</div>
+</div>
+
+<div id="timer" class="hidden">
+  <div class="thead" id="thead"><span class="lab">TIMER</span><span id="tmini">0:00</span>
+    <button onclick="miniTimer()">▭</button><button onclick="toggleTimer()">✕</button></div>
+  <div class="tbody"><div id="tdisp">0:00</div>
+    <div class="tgrid">
+      <button onclick="setT(1)">1분</button><button onclick="setT(2)">2분</button>
+      <button onclick="setT(3)">3분</button><button onclick="setT(4)">4분</button>
+      <button onclick="setT(5)">5분</button><button onclick="setT(6)">6분</button>
+      <button onclick="setT(7)">7분</button><button onclick="setT(10)">10분</button></div>
+    <div class="tctl"><button id="tgo" onclick="goT()">시작</button><button id="trs" onclick="resetT()">초기화</button></div>
+  </div>
+</div>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="mbox"><div class="mhead"><h3 id="mTitle">근거</h3>
+    <button class="tool" onclick="sayModal()">🔊 읽어주기</button>
+    <button class="tool" onclick="closeModal()">✕</button></div>
+    <div class="mbody"><div class="mpara" id="mPara" onclick="sayModal()"></div></div></div>
+</div>
+<div class="modal" id="pickModal" onclick="if(event.target===this)closeP()">
+  <div class="mbox" style="max-width:460px"><div class="mhead"><h3>발표자 뽑기</h3>
+    <button class="tool" onclick="closeP()">✕</button></div>
+    <div class="mbody"><div style="text-align:center">
+      <div>1번부터 <input class="inp" id="pickMax" type="number" value="28" min="2" max="60">번까지</div>
+      <div id="pickOut">?</div>
+      <button class="btn btn-a" style="width:100%;justify-content:center" onclick="roll()">뽑기</button>
+    </div></div></div>
+</div>
+<div class="side" id="side"><div class="mhead"><h3>Reading</h3>
+  <button class="tool" onclick="toggleSide()">✕</button></div>
+  <div class="sbody" id="sideBody"></div></div>
+
+<script>
+const PARAS=[
+"Ask almost any people on earth where the story of humanity begins, and they will point, with a straight face, to themselves. The Chinese have long thought of their land as the Middle Kingdom, with everything else arranged around the edges. The Greeks called everyone who did not speak Greek a barbarian, a word that imitates what their language sounded like to Greek ears — bar, bar, bar. The British once drew the prime meridian through a suburb of London and have been measuring the world from there ever since.",
+"This is not a failing of any one culture. It is what cultures do. A people that did not place itself near the centre of things would have little reason to hold together at all. The stories a nation tells about its past are not meant to be accurate; they are meant to be shared. What they produce is not knowledge but belonging, and belonging is worth a great deal more to a community than the truth about who invented the wheel.",
+"Still, the stories are nearly always wrong, and wrong in the same direction. Every nation believes it has contributed something unique to the world, and every nation is mistaken about how unique it was. Monotheism, mathematics, the alphabet, the idea that all people are equal — each has been claimed by several cultures at once, and each in fact grew from a tangle of borrowings that no single people can honestly own.",
+"Consider something as ordinary as the number zero. It was used in India, refined by Arab mathematicians, carried into Europe by Italian merchants, and resisted for centuries by European churchmen who found it suspicious. Whose invention is it? Each of these peoples has, at one time or another, claimed it. The honest answer is that nobody invented it; it arrived, slowly, through hundreds of hands, most of which belonged to people whose names were never written down. The same could be said of paper, of gunpowder, of the compass, and of almost everything else we are tempted to put a flag on.",
+"The same is true of the things we are proudest of. The idea of human rights is often presented as a European gift to the world. But Europe spent most of its history denying such rights to most of its own people, and the moment it began to take them seriously was also the moment it was learning, painfully, from colonies that had turned the idea back on their colonisers. The lesson travelled in both directions. It usually does.",
+"None of this means that cultures are all the same, or that nothing has ever been achieved anywhere. It means that achievements are shared before they are owned, and owned only in the stories told afterwards. A discovery is made once; the story of who made it is rewritten in every generation, and usually in favour of whoever is telling it. The wheel does not care who turns it. The alphabet does not remember who wrote the first letter.",
+"Why does any of this matter? Because a people that believes it stands at the centre of history will, sooner or later, treat the rest of the world as its outskirts. Pride in what we think we invented slides easily into contempt for those who, we think, invented nothing. And a world of eight billion people cannot afford for each of its nations to believe that it alone is the main character.",
+"The alternative is not shame. It is a kind of humility that costs nothing and asks for nothing except a change of focus: to see your own story as one thread in a cloth that nobody wove alone. Nothing is taken from you by admitting this. Your thread is still yours; it is simply not the whole cloth. That is a harder thing to feel than to say. But it is the only honest place to begin."
+];
+const PLAN=[["1","어휘 테스트","Wayground · 8분"],["2","T/F와 순서 확인","4분 + 3분"],
+["3","까다로운 문장 풀기","고정 3문장 · 15분"],["4","논증은 어떻게 지어졌나","여섯 단계 · 13분"],["5","주제 정리","7분"]];
+
+const TF=[
+{q:"According to the writer, placing one's own culture at the centre of the world is a problem found in only a few nations.",
+ kr:"필자에 따르면 자기 문화를 세계의 중심에 두는 것은 소수의 나라에서만 발견되는 문제다.",a:"F",p:2,
+ ev:["This is not a failing of any one culture. It is what cultures do."],
+ why:"몇몇 나라의 결함이 아니라 <b>모든 문화가 하는 일</b>이라고 ¶2가 말합니다. 중국·그리스·영국은 예시일 뿐이죠.",
+ tip:"<b>이 인정이 중요합니다</b> — 자기중심성을 먼저 자연스러운 것으로 인정하기 때문에, 뒤의 경고가 설교가 아니라 분석으로 들립니다."},
+{q:"The writer says national stories are meant to produce belonging rather than accurate knowledge.",
+ kr:"필자는 국가의 이야기가 정확한 지식이 아니라 소속감을 만들기 위한 것이라고 말한다.",a:"T",p:2,
+ ev:["are not meant to be accurate; they are meant to be shared. What they produce is not knowledge but belonging"],
+ why:"맞습니다. 정확하기 위해서가 아니라 공유되기 위한 것이고, 만들어내는 것은 지식이 아니라 소속감입니다.",
+ tip:"<b>1단원과 이어집니다</b> — 소속감이 공동체를 만든다는 논지를 그대로 받았죠."},
+{q:"According to the writer, the number zero was invented by a single culture that other cultures later copied.",
+ kr:"필자에 따르면 숫자 0은 한 문화가 발명했고 다른 문화들이 나중에 베꼈다.",a:"F",p:4,
+ ev:["nobody invented it; it arrived, slowly, through hundreds of hands"],
+ why:"아무도 발명하지 않았습니다. 인도에서 쓰이고, 아랍에서 다듬어지고, 이탈리아 상인이 들여왔죠. <b>수백 명의 손</b>을 거쳐 도달했습니다.",
+ tip:"<b>이 예시의 힘</b> — 거창한 것이 아니라 가장 평범한 것(0)부터 시작합니다. 다음 문단에서 자랑스러운 것(인권)으로 올라가죠."},
+{q:"The writer claims that the idea of human rights moved only from Europe to its colonies, never the other way.",
+ kr:"필자는 인권 개념이 유럽에서 식민지로만 흘러갔고 반대 방향은 없었다고 주장한다.",a:"F",p:5,
+ ev:["The lesson travelled in both directions."],
+ why:"정반대입니다. 유럽이 인권을 진지하게 받아들이기 시작한 순간은, <b>식민지가 그 개념을 유럽에 되돌려 겨누던</b> 순간이었다고 말합니다. 양방향이었죠.",
+ tip:"<b>다섯 번째 만나는 양보-반박</b> — 통념(유럽의 선물)을 먼저 세우고 뒤집습니다. 이번엔 반박이 부드러워 알아보기 어렵습니다."},
+{q:"The writer concludes that nations should feel shame about their past.",
+ kr:"필자는 나라들이 자기 과거에 대해 수치심을 느껴야 한다고 결론 내린다.",a:"F",p:8,
+ ev:["The alternative is not shame."],
+ why:"마지막 문단 첫 문장이 <b>수치심이 아니다</b>라고 못 박습니다. 대안은 초점을 바꾸는 겸손이고, 네 실은 여전히 네 것이라고요.",
+ tip:"<b>끝까지 읽었는지 확인하는 문항</b> — 이 글을 \"반성하라\"로 읽으면 틀립니다."}
+];
+
+const HARD=[
+{tag:"¶2",p:2,star:false,
+ sent:"A people that did not place itself near the centre of things would have little reason to hold together at all.",
+ tasks:[
+  {q:"Is \u201Ca people\u201D singular or plural? What does it mean?",kq:'"a people"은 단수인가요, 복수인가요? 무슨 뜻이죠?',
+   ans:'<div class="big serif">a people = <b>하나의 민족</b> (단수)</div><p class="kr">people(사람들, 복수)과 다릅니다. 관사 a가 붙으면 "한 민족"이 됩니다. 복수는 peoples.</p>',
+   why:'<b>that절이 주어를 수식합니다</b> — "자기를 세상의 중심 가까이 두지 않는 민족". 그 뒤에 동사 would have가 옵니다.',
+   ev:["A people that did not place itself near the centre of things"]},
+  {q:"Why \u201Cwould have\u201D and not \u201Chas\u201D? Does such a people exist?",kq:'왜 "has"가 아니라 "would have"일까요? 그런 민족이 있나요?',
+   ans:'<p style="font-size:calc(19px*var(--fs));font-weight:600">없습니다. 그래서 <span style="color:var(--green)">가정법</span>입니다.</p>',
+   why:'<b>역설적 설명</b> — "자기를 중심에 두지 않는 민족이 있다면 뭉칠 이유가 없을 것이다" → 그래서 모든 민족이 자기를 중심에 둔다는 거죠. 가정으로 현실을 설명합니다.<br><br><b>at all</b> — 부정과 함께 "아예, 전혀". little reason ... at all = "뭉칠 이유가 아예 거의 없다".',
+   ev:["would have little reason to hold together at all"]}
+ ]},
+{tag:"¶4",p:4,star:false,
+ sent:"It arrived, slowly, through hundreds of hands, most of which belonged to people whose names were never written down.",
+ tasks:[
+  {q:"What does \u201Cwhich\u201D refer to? What does \u201Cwhose\u201D refer to?",kq:'"which"는 무엇을, "whose"는 무엇을 가리키나요?',
+   ans:'<div class="big serif">which = <b>hands</b> · whose = <b>people</b></div><p class="kr">수백 개의 손 중 대부분은 → 이름이 기록되지 않은 사람들의 것이었다.</p>',
+   why:'<b>관계절 두 겹</b> — most of which(계속적 용법)가 hands를 받고, 그 안에서 people whose names ~ 로 소유격 관계절이 또 붙습니다. 선행사를 하나씩 짚어야 풀립니다.',
+   ev:["most of which belonged to people whose names were never written down"]},
+  {q:"Rewrite the part after \u201Chands\u201D as a separate sentence.",kq:'"hands" 뒤를 별도 문장으로 바꿔 쓰세요.',
+   ans:'<div class="big serif" onclick="say(this)"><span class="spk">🔊</span>Most of those hands belonged to people. Their names were never written down.</div>',
+   why:'<b>풀어 쓰면 두 문장</b>이 됩니다. 원문이 한 문장으로 묶은 것은 "손 → 사람 → 이름 없음"이 한 호흡으로 이어지게 하기 위해서입니다. <b>이름 없는 수백 명의 손</b> — 그게 요점이죠.',
+   ev:["through hundreds of hands"]}
+ ]},
+{tag:"¶5",p:5,star:true,
+ sent:"The moment it began to take them seriously was also the moment it was learning, painfully, from colonies that had turned the idea back on their colonisers.",
+ tasks:[
+  {q:"What does each \u201Cit\u201D refer to? What does \u201Cthem\u201D refer to?",kq:'두 "it"은 각각 무엇을, "them"은 무엇을 가리키나요?',
+   ans:'<div class="big serif">it = <b>Europe</b> (둘 다) · them = <b>such rights</b> (인권)</div>',
+   why:'<b>앞 문장에서 찾습니다</b> — <i>Europe spent most of its history denying such rights ...</i> 주어 Europe과 목적어 such rights가 그대로 이어집니다. 대명사가 셋이라 선행사를 놓치면 문장이 무너집니다.',
+   ev:["Europe spent most of its history denying such rights to most of its own people"]},
+  {q:"Two moments are named. What happened in each?",kq:"두 '순간'이 나옵니다. 각각 무슨 일이 있었나요?",
+   ans:'<p style="font-size:calc(18px*var(--fs));line-height:1.8"><b>첫 순간</b> — 유럽이 인권을 진지하게 받아들이기 시작<br><b>둘째 순간</b> — 식민지가 그 인권 개념을 유럽에 되돌려 겨누며, 유럽이 뼈아프게 배우고 있던 때<br><span style="color:var(--green);font-weight:700">그리고 둘은 같은 순간이었다.</span></p>',
+   why:'<b>the moment A was also the moment B</b> = "A한 순간이 곧 B한 순간이기도 했다". 동시였다는 뜻입니다.<br><br><b>had turned</b> — 과거완료. "이미 되돌려 겨눈 상태였던" 식민지. turn A back on B = A를 B에게 되돌려 겨누다.<br><br><b>배경</b> — 아이티 혁명. 프랑스 혁명이 "인간은 평등하다"고 선언하자, 프랑스 식민지 아이티의 노예들이 그 선언을 그대로 들어 독립했습니다. 프랑스는 자기가 만든 원칙에 자기가 걸린 셈이죠.',
+   ev:["from colonies that had turned the idea back on their colonisers"]}
+ ]}
+];
+
+const ORDER_KEY=["D","B","F","H","A","G","C","E"];
+const STAGES=[
+ {step:"CLAIM",kr:"주장",p:"1–2",pn:[1,2],q:"What do all cultures do, and why is that natural?",
+  a:"Every culture puts itself at the centre — and that is what holds a community together.",given:0,
+  ev:[[1,"they will point, with a straight face, to themselves"],[2,"A people that did not place itself near the centre of things would have little reason to hold together at all"]],
+  why:"¶1은 <b>무엇을 하는가</b>(모두 자기를 가리킨다), ¶2는 <b>왜 자연스러운가</b>(그래야 뭉친다)입니다. 두 문단이 합쳐져 주장 하나가 됩니다. 자기중심성을 먼저 자연스럽다고 인정하기 때문에, 뒤의 경고가 설교로 들리지 않습니다."},
+ {step:"PROBLEM",kr:"문제",p:"3",pn:[3],q:"What is wrong with the stories?",
+  a:"They are nearly always wrong, and all wrong in the same direction — each nation makes itself bigger.",given:0,
+  ev:[[3,"the stories are nearly always wrong, and wrong in the same direction"]],
+  why:"Still로 시작합니다 — 앞에서 자연스럽다고 했지만 <b>그럼에도</b> 틀렸다는 전환이죠. \"같은 방향으로\"가 열쇠입니다. 무작위로 틀린 게 아니라 모두 자기를 키우는 쪽으로 틀렸다는 뜻입니다. 사전과제 요약문 F가 이 칸의 답 그대로입니다."},
+ {step:"EXAMPLES",kr:"예시",p:"4–5",pn:[4,5],q:"Two cases. One ordinary, one proud. What do they share?",
+  a:"Zero and human rights. Both passed through many hands; no single people can own either.",given:0,
+  ev:[[4,"nobody invented it; it arrived, slowly, through hundreds of hands"],[5,"The lesson travelled in both directions"]],
+  why:"¶5 첫 문장이 단서입니다 — <i>The same is true of the things we are proudest of.</i> \"같은 것이 참이다\"라니, 무엇이 같다는 걸까요? 0도 인권도 <b>여러 손을 거쳤고 한 민족이 소유할 수 없다</b>는 점입니다. 평범한 것(0)에서 자랑스러운 것(인권)으로 올라가는 순서라 ¶4가 ¶5 앞에 옵니다."},
+ {step:"GENERAL RULE",kr:"일반화",p:"6",pn:[6],q:"What is the rule the examples point to?",
+  a:"Achievements are shared before they are owned.",given:1,
+  ev:[[6,"achievements are shared before they are owned, and owned only in the stories told afterwards"]],
+  why:"예시 두 개를 거친 뒤에야 나오는 규칙입니다. ¶3이 \"틀렸다\"는 문제 제기였다면 ¶6은 \"왜 틀릴 수밖에 없는가\"의 원리입니다. 그래서 ¶3을 ¶6 뒤로 보내면 예시 없이 결론부터 나오게 됩니다."},
+ {step:"WHY IT MATTERS",kr:"왜 중요한가",p:"7",pn:[7],q:"What happens when a nation believes it is the centre?",
+  a:"It treats the rest of the world as its outskirts. Pride slides into contempt.",given:0,
+  ev:[[7,"Pride in what we think we invented slides easily into contempt for those who, we think, invented nothing"]],
+  why:"<i>Why does any of this matter?</i>로 스스로 묻고 답합니다. ¶1의 \"가장자리(edges)\"가 여기서 \"변두리(outskirts)\"로 돌아오죠. 자부심이 경멸로 <b>미끄러진다(slides)</b>는 동사가 핵심입니다 — 의도하지 않아도 그렇게 된다는 뜻입니다. 사전과제 요약문 C와 같습니다."},
+ {step:"ALTERNATIVE",kr:"대안",p:"8",pn:[8],q:"What does the writer ask for — and what does he NOT ask for?",
+  a:"He asks for humility: see your story as one thread in a cloth. He does NOT ask for shame.",given:0,
+  ev:[[8,"The alternative is not shame"],[8,"to see your own story as one thread in a cloth that nobody wove alone"]],
+  why:"첫 문장이 <b>요구하지 않는 것</b>(수치심)을 먼저 못 박고, 그다음 <b>요구하는 것</b>(초점의 전환)을 말합니다. 이 순서가 중요합니다. 이 글을 \"반성하라\"로 읽으면 틀립니다. <i>Your thread is still yours</i> — 내 몫은 내 몫이고, 전부가 내 것이 아닐 뿐입니다."}
+];
+
+const STEPS=[["START","오늘 할 일"],["CHECK","답 확인"],["PART 1","문장 풀기"],["PART 2","논증의 뼈대"],["THEME","주제 정리"]];
+document.getElementById('steps').innerHTML=STEPS.map((s,i)=>
+ `<button class="step${i===0?' on':''}" onclick="go(${i})"><div class="n">${s[0]}</div><div class="t">${s[1]}</div></button>`).join('');
+function go(i){document.querySelectorAll('.panel').forEach((p,j)=>p.classList.toggle('on',i===j));
+ document.querySelectorAll('.step').forEach((s,j)=>s.classList.toggle('on',i===j));
+ window.scrollTo({top:0,behavior:'smooth'});}
+
+document.getElementById('planList').innerHTML=PLAN.map(p=>
+ `<div style="display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--paper-2)">
+ <div style="flex:none;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;
+ display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">${p[0]}</div>
+ <div style="flex:1"><div style="font-weight:600;font-size:calc(18px*var(--fs))">${p[1]}</div>
+ <div style="color:var(--ink-faint);font-size:calc(14px*var(--fs))">${p[2]}</div></div></div>`).join('');
+
+document.getElementById('tfList').innerHTML=TF.map((t,i)=>`
+<div class="tf"><div class="tfn">${i+1}</div><div class="tfbody">
+ <div class="sent" style="margin:0;font-size:calc(19px*var(--fs));padding:6px 8px" onclick="say(this)"><span class="spk">🔊</span>${t.q}</div>
+ <div class="kr" style="padding-left:8px">${t.kr}</div>
+ <div class="btnrow" style="padding-left:8px">
+  <button class="btn btn-c" onclick="tfShow(${i})">정답 및 해설</button>
+  <button class="btn btn-g" onclick="showP(${t.p},${JSON.stringify(t.ev).replace(/"/g,'&quot;')})">📄 근거 ¶${t.p}${t.cross?'~'+(t.cross+4):''}</button></div>
+ <div class="reveal" id="tf${i}"><div class="answer"><h4>왜 ${t.a}인가</h4><p>${t.why}</p>
+  <div class="why">${t.tip}</div></div></div>
+</div><div class="tfstate" id="tfs${i}">?</div></div>`).join('');
+function tfShow(i){const r=document.getElementById('tf'+i),s=document.getElementById('tfs'+i);
+ const o=r.classList.toggle('open');s.textContent=o?TF[i].a:'?';s.className='tfstate'+(o?' '+TF[i].a:'');}
+function allTF(){TF.forEach((t,i)=>{document.getElementById('tf'+i).classList.add('open');
+ const s=document.getElementById('tfs'+i);s.textContent=t.a;s.className='tfstate '+t.a;});}
+function resetTF(){TF.forEach((t,i)=>{document.getElementById('tf'+i).classList.remove('open');
+ const s=document.getElementById('tfs'+i);s.textContent='?';s.className='tfstate';});}
+
+document.getElementById('hardList').innerHTML=HARD.map((h,i)=>`
+<div class="card"${h.star?' style="border-left:5px solid var(--rose)"':''}>
+ <div class="card-head"><span class="pill ${h.star?'rose':'gold'}">${i+1} · ${h.tag}</span>
+ ${h.star?'<span class="pill rose">최고 난도</span>':''}</div>
+ <div class="sent" onclick="say(this)"><span class="spk">🔊</span>${h.sent}</div>
+ <div class="btnrow">
+  <button class="btn btn-g" onclick="sayText(${JSON.stringify(h.sent).replace(/"/g,'&quot;')},.6)">🐢 천천히</button>
+  <button class="btn btn-g" onclick="showP(${h.p})">📄 단락 전체</button></div>
+ ${h.tasks.map((t,j)=>`<div class="task"><div class="q">▸ ${t.q}</div><div class="kr">${t.kq}</div>
+  <div class="btnrow"><button class="btn btn-c" onclick="tog('h${i}_${j}')">정답 및 해설</button>
+  ${t.ev?`<button class="btn btn-g" onclick="showP(${t.pv||h.p},${JSON.stringify(t.ev).replace(/"/g,'&quot;')})">📄 근거 ¶${t.pv||h.p}</button>`:''}</div>
+  <div class="reveal" id="h${i}_${j}"><div class="answer"><h4>정답</h4>${t.ans}<div class="why">${t.why}</div></div></div>
+ </div>`).join('')}
+</div>`).join('');
+
+document.getElementById('ordRow').innerHTML=ORDER_KEY.map((L,i)=>
+ `<div class="ordcell"><div class="on">\u00b6${i+1}</div><div class="ol" id="ord${i}">?</div></div>`).join('');
+function showOrder(){ORDER_KEY.forEach((L,i)=>{const e=document.getElementById('ord'+i);e.textContent=L;e.classList.add('show');});}
+
+function markPara(n,evs){let html=PARAS[n-1];
+ evs.filter(e=>e[0]===n).forEach(([_,e])=>{const i=html.toLowerCase().indexOf(e.toLowerCase().slice(0,40));
+  if(i>=0)html=html.slice(0,i)+'<mark>'+html.substr(i,e.length)+'</mark>'+html.slice(i+e.length);});
+ return html;}
+document.getElementById('stageList').innerHTML=STAGES.map((st,i)=>
+ `<div class="stage ${st.given?'given':''}">
+   <div class="shead"><div class="stag">${st.step}<span>${st.kr}</span></div><div class="spara">\u00b6${st.p}</div>
+     <button class="btn btn-c" onclick="fillStage(${i})">${st.given?'근거 보기':'정답'}</button></div>
+   <div class="sq">${st.q}</div>
+   <div class="sa ${st.given?'show':''}" id="sa${i}">${st.given?st.a:'?'}</div>
+   <div class="reveal" id="sev${i}"><div class="sev">
+     ${st.pn.map(n=>`<div class="sevp"><div class="sevn">\u00b6${n}</div><div class="sevt" onclick="sayText(PARAS[${n-1}])">${markPara(n,st.ev)}</div></div>`).join('')}
+     <div class="sevw">${st.why}</div>
+   </div></div>
+ </div>`).join('');
+function fillStage(i){const e=document.getElementById('sa'+i);e.textContent=STAGES[i].a;e.classList.add('show');
+ document.getElementById('sev'+i).classList.add('open');
+ if(STAGES.every((st,k)=>document.getElementById('sev'+k).classList.contains('open')))
+  document.getElementById('stageWhy').classList.add('open');}
+function allStages(){STAGES.forEach((st,i)=>fillStage(i));}
+function fillPoint(){
+ document.getElementById('cb1').textContent='belonging holds a community together';
+ document.getElementById('cb2').textContent='pride slides into contempt for others';
+ document.getElementById('pointWhy').classList.add('open');}
+
+document.getElementById('sideBody').innerHTML=PARAS.map((p,i)=>
+ `<p class="para" onclick="sayText(this.dataset.t)" data-t="${p.replace(/"/g,'&quot;')}"><span class="pn">¶${i+1}</span>${p}</p>`).join('');
+
+let voice=null;
+function pickVoice(){const vs=speechSynthesis.getVoices();
+ voice=vs.find(v=>/en-US/i.test(v.lang)&&/Google US English/i.test(v.name))
+  ||vs.find(v=>/en-US/i.test(v.lang)&&/Natural|Premium|Enhanced/i.test(v.name))
+  ||vs.find(v=>/en-US/i.test(v.lang)&&/Samantha|Ava|Allison|Aria|Jenny|Zira|Guy/i.test(v.name))
+  ||vs.find(v=>/en-US/i.test(v.lang))
+  ||vs.find(v=>/^en/i.test(v.lang))||null;}
+pickVoice();speechSynthesis.onvoiceschanged=pickVoice;
+function sayText(t,r){if(!t||!t.trim())return;speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(t.replace(/\s+/g,' ').trim());
+ if(voice)u.voice=voice;u.lang=voice?voice.lang:'en-US';u.rate=r||.88;speechSynthesis.speak(u);}
+function say(el){const t=el.textContent.replace('🔊','').trim();
+ document.querySelectorAll('.sent.speaking').forEach(x=>x.classList.remove('speaking'));
+ el.classList.add('speaking');speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(t);if(voice)u.voice=voice;
+ u.lang=voice?voice.lang:'en-US';u.rate=.88;u.onend=()=>el.classList.remove('speaking');
+ speechSynthesis.speak(u);}
+function tog(id){document.getElementById(id).classList.toggle('open');}
+
+let modalText='';
+function showP(n,ev){let html=PARAS[n-1];
+ (ev||[]).forEach(e=>{const i=html.toLowerCase().indexOf(e.toLowerCase().slice(0,40));
+  if(i>=0)html=html.slice(0,i)+'<mark>'+html.substr(i,e.length)+'</mark>'+html.slice(i+e.length);});
+ document.getElementById('mTitle').textContent='단락 ¶'+n;
+ document.getElementById('mPara').innerHTML=html;modalText=PARAS[n-1];
+ document.getElementById('modal').classList.add('on');}
+function sayModal(){sayText(modalText);}
+function closeModal(){document.getElementById('modal').classList.remove('on');speechSynthesis.cancel();}
+function toggleSide(){document.getElementById('side').classList.toggle('on');}
+function openPick(){document.getElementById('pickModal').classList.add('on');}
+function closeP(){document.getElementById('pickModal').classList.remove('on');}
+function roll(){const max=Math.max(2,+document.getElementById('pickMax').value||28);
+ const out=document.getElementById('pickOut');out.classList.add('roll');let n=0;
+ const iv=setInterval(()=>{out.textContent=1+Math.floor(Math.random()*max);
+  if(++n>18){clearInterval(iv);out.classList.remove('roll');beep(1);}},60);}
+let fs=1;function fsz(d){fs=Math.min(1.5,Math.max(.8,fs+d*.08));
+ document.documentElement.style.setProperty('--fs',fs.toFixed(2));}
+let hidden=false;
+function toggleHide(){hidden=!hidden;document.body.classList.toggle('hideans',hidden);
+ document.getElementById('hideBtn').classList.toggle('on',hidden);
+ document.getElementById('hideBtn').textContent=hidden?'👁 정답 보이기':'🙈 정답 가리기';
+ if(hidden)resetTF();}
+
+let tTotal=0,tLeft=0,tIv=null,tRun=false;
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function paint(){document.getElementById('tdisp').textContent=fmt(tLeft);
+ document.getElementById('tmini').textContent=fmt(tLeft);
+ document.getElementById('tdisp').classList.toggle('warn',tLeft<=10&&tLeft>0&&tRun);}
+function setT(m){tTotal=m*60;tLeft=tTotal;stopT();paint();}
+function goT(){if(tRun){stopT();return;}if(tLeft<=0)return;tRun=true;
+ document.getElementById('tgo').textContent='일시정지';
+ document.getElementById('tgo').style.background='var(--gold)';
+ tIv=setInterval(()=>{tLeft--;paint();if(tLeft<=0){stopT();alarm();}},1000);}
+function stopT(){clearInterval(tIv);tRun=false;
+ document.getElementById('tgo').textContent='시작';
+ document.getElementById('tgo').style.background='var(--green)';paint();}
+function resetT(){tLeft=tTotal;stopT();paint();}
+function toggleTimer(){const t=document.getElementById('timer');
+ const h=t.classList.toggle('hidden');document.getElementById('tBtn').classList.toggle('on',!h);}
+function miniTimer(){document.getElementById('timer').classList.toggle('mini');}
+let ac=null;
+function beep(n){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();
+ for(let i=0;i<n;i++){const o=ac.createOscillator(),g=ac.createGain();
+  o.connect(g);g.connect(ac.destination);o.type='sine';o.frequency.value=i%2?740:880;
+  const t0=ac.currentTime+i*.42;g.gain.setValueAtTime(0,t0);
+  g.gain.linearRampToValueAtTime(.35,t0+.03);g.gain.exponentialRampToValueAtTime(.001,t0+.36);
+  o.start(t0);o.stop(t0+.4);}}catch(e){}}
+function alarm(){beep(4);const t=document.getElementById('timer');
+ t.style.transition='transform .1s';let k=0;
+ const iv=setInterval(()=>{t.style.transform=k%2?'translateX(-6px)':'translateX(6px)';
+  if(++k>10){clearInterval(iv);t.style.transform='';}},90);}
+(function(){const t=document.getElementById('timer'),h=document.getElementById('thead');
+ let dx=0,dy=0,on=false;
+ h.addEventListener('pointerdown',e=>{if(e.target.tagName==='BUTTON')return;on=true;
+  h.setPointerCapture(e.pointerId);const r=t.getBoundingClientRect();
+  dx=e.clientX-r.left;dy=e.clientY-r.top;t.style.right='auto';t.style.bottom='auto';
+  t.style.left=r.left+'px';t.style.top=r.top+'px';});
+ h.addEventListener('pointermove',e=>{if(!on)return;const w=t.offsetWidth,hh=t.offsetHeight;
+  t.style.left=Math.min(window.innerWidth-w-6,Math.max(6,e.clientX-dx))+'px';
+  t.style.top=Math.min(window.innerHeight-hh-6,Math.max(6,e.clientY-dy))+'px';});
+ h.addEventListener('pointerup',()=>on=false);})();
+setT(5);
+</script>
+</body>
+</html>
+
+</body></html>

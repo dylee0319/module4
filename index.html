@@ -7,7 +7,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
-/* 레이아웃: 한 단 880px. 위에는 차시 탭, 본문은 '지금 할 일 → 활동 카드 → 참고와 도구' 순서. 고쳐 쓴 자리를 보여 주는 교정 표시(지운 말과 넣은 말)가 유일한 장식. */
+/* 레이아웃: 한 단 880px. 위에는 차시 탭, 본문은 '지금 할 일 → 활동 카드 → 참고와 도구' 순서. 강조는 줄을 긋지 않고 색과 굵기, 테두리의 대비로 한다. 지운 말·넣은 말 표시는 학생이 실제로 고친 문장에만 쓴다. */
 :root{
   --bg:#f3f5f9; --surface:#ffffff; --sunk:#e9edf4; --ink:#14213d; --muted:#5a667c; --line:#d5dbe6;
   --accent:#2a55d9; --accent-ink:#ffffff; --accent-soft:#e4ebff;
@@ -59,9 +59,33 @@ main{padding-block:28px 120px}
 .hero{display:flex;flex-direction:column;gap:14px;padding-block:8px 4px}
 .eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;color:var(--muted)}
 .hero h1{font-size:clamp(1.7rem,5.2vw,2.6rem);font-weight:700;letter-spacing:-.025em}
-.hero h1 del{color:var(--muted);text-decoration-color:var(--mark);text-decoration-thickness:.09em;font-weight:500}
-.hero h1 ins{text-decoration:none;color:var(--ink);position:relative;white-space:nowrap}
-.hero h1 ins::after{content:"";position:absolute;left:-2px;right:-2px;bottom:.04em;height:.32em;background:var(--mark);opacity:.22;border-radius:3px}
+.hero h1 em{font-style:normal;color:var(--accent);white-space:nowrap;padding:0 .08em;border-radius:4px;background:linear-gradient(transparent 62%,color-mix(in srgb,var(--accent) 20%,transparent) 62%)}
+.shift{display:grid;grid-template-columns:minmax(0,.85fr) auto minmax(0,1.25fr);gap:12px;align-items:stretch;margin-top:4px}
+.shift > div{border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.shift .lab{display:flex;align-items:center;gap:8px}
+.shift .from{border:1px dashed var(--line);color:var(--muted)}
+.shift .from b{font-weight:600;font-size:1rem}
+.shift .to{border:2px solid var(--accent);background:var(--accent-soft);box-shadow:var(--shadow)}
+.shift .to .lab{color:var(--accent)}
+.shift .to b{font-size:1.14rem;letter-spacing:-.012em;line-height:1.4}
+.shift small{font-size:.87rem}
+.shift .to small{color:var(--muted)}
+.shift .ar{align-self:center;color:var(--accent);font-size:1.5rem;font-weight:700;line-height:1}
+.shift .chip0{font-family:var(--text);font-size:.72rem;font-weight:700;letter-spacing:0;padding:1px 8px;border-radius:99px;background:var(--accent);color:var(--accent-ink)}
+@media (max-width:640px){.shift{grid-template-columns:1fr}.shift .ar{justify-self:center;transform:rotate(90deg)}}
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.flow button{position:relative;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;cursor:pointer;min-width:0}
+.flow button:hover{border-color:var(--ink)}
+.flow .k{font-family:var(--mono);font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.flow b{font-size:.97rem;line-height:1.45}
+.flow .o{margin-top:auto;border-top:1px dashed var(--line);padding-top:8px;font-size:.84rem;color:var(--muted)}
+.flow .o i{font-style:normal;display:block;font-family:var(--mono);font-size:.74rem;letter-spacing:.03em}
+.flow button:not(:last-child)::after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:700;font-size:.95rem}
+.flow button.core{border:2px solid var(--accent);background:var(--accent-soft)}
+.flow button.core .k{color:var(--accent)}
+@media (max-width:760px){.flow{grid-template-columns:1fr 1fr;gap:10px}.flow button:not(:last-child)::after{content:none}}
+@media (max-width:420px){.flow{grid-template-columns:1fr}}
+.dim{color:var(--muted)}
 .hero p{color:var(--muted);max-width:60ch}
 
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px;min-width:0}
@@ -156,7 +180,8 @@ tr:last-child td{border-bottom:0}
 .mini{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
 .mini b{font-size:.95rem}
 .mini span{color:var(--muted);font-size:.9rem}
-.mini.no b{text-decoration:line-through;text-decoration-color:var(--mark)}
+.mini.no{border-style:dashed;background:var(--sunk)}
+.mini.no b{color:var(--muted)}
 
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:.9rem;font-weight:600;cursor:pointer}
@@ -488,12 +513,23 @@ function dayCard(){
   });
   return h("section",{class:"card"},[h("h2",{text:"오늘의 순서"}),h("p",{class:"sub",text:"차시마다 설명을 먼저 듣고, 나머지 시간은 끊지 않고 작업합니다."}),wrap]);
 }
+var FLOW=[["s1","1차시 · 평가","무엇을 평가할지 정합니다","평가 요소와 학습의 증거"],["s2","2차시 · 성찰","내 수업에서 바꿀 곳을 찾습니다","우선 과제 세 개 이내"],["s3","3차시 · 재설계","목표와 증거를 먼저 정하고 활동을 다시 배치합니다","재설계 워크시트와 지도안 초안"],["s4","4차시 · 공유","동료의 검토를 받아 고치고 제출합니다","제출한 지도안과 실천 계획"]];
+function flowCard(){
+  return h("section",{class:"card"},[h("h2",{text:"네 차시는 이렇게 이어집니다"}),h("p",{class:"sub",text:"앞 차시에서 남긴 것이 다음 차시의 출발점이 됩니다. 칸을 누르면 그 차시로 갑니다."}),
+    h("div",{class:"flow"},FLOW.map(function(f){ return h("button",{type:"button",class:f[0]==="s3"?"core":null,onclick:function(){ go(f[0]); }},[h("span",{class:"k"},[f[1]]),h("b",{text:f[2]}),h("span",{class:"o"},[h("i",{text:"남는 것"}),f[3]])]); }))]);
+}
 function viewToday(){
   var prep=[["AIEDAP(aiedap.or.kr)에 로그인해 자신의 수업지도안과 실천보고서를 열어 둡니다.",""],["패들렛 ‘강의 자료’에서 워크시트 1~4 양식과 참고 자료를 내려받습니다.",""],["워크시트는 파일에 작성하고, 차시를 마칠 때마다 패들렛의 해당 칸에 올립니다.",""]];
   var ul=h("ul",{class:"checks"},prep.map(function(p,i){ var id="prep-"+i, cb=h("input",{type:"checkbox",id:id}); cb.checked=!!get(id,false); cb.addEventListener("change",function(){ set(id,cb.checked); }); return h("li",{},[h("label",{for:id},[cb,h("span",{},[h("span",{class:"n",text:String(i+1)}),p[0]])])]); }));
   return [
-    h("section",{class:"hero"},[h("div",{class:"eyebrow",text:"AIEDAP 마스터교원 신규연수 · 경북권역 · 영어"}),h("h1",{html:"내 수업지도안을 <del>조금 손본다</del> <ins>재설계한다</ins>"}),h("p",{text:"모듈 4 「나의 AI 융합수업 re-design하기」의 네 차시를 따라가는 길잡이입니다. 지금 할 일, 여는 워크시트, 올리는 곳을 한 화면에서 확인하실 수 있습니다."})]),
+    h("section",{class:"hero"},[h("div",{class:"eyebrow",text:"AIEDAP 마스터교원 신규연수 · 경북권역 · 영어"}),h("h1",{html:"내 수업지도안을 <em>재설계</em>합니다"}),h("p",{text:"모듈 4 「나의 AI 융합수업 re-design하기」의 네 차시를 따라가는 길잡이입니다. 지금 할 일, 여는 워크시트, 올리는 곳을 한 화면에서 확인하실 수 있습니다."}),
+      h("div",{class:"shift"},[
+        h("div",{class:"from"},[h("span",{class:"lab",text:"재작성"}),h("b",{text:"지도안의 문장을 고쳐 씁니다"}),h("small",{text:"활동이나 도구 몇 가지가 바뀝니다"})]),
+        h("span",{class:"ar","aria-hidden":"true",text:"→"}),
+        h("div",{class:"to"},[h("span",{class:"lab"},["재설계",h("span",{class:"chip0",text:"오늘 하는 일"})]),h("b",{text:"무엇을 학습의 증거로 삼을지부터 다시 정합니다"}),h("small",{text:"목표 · 증거 · 활동 · 평가가 함께 바뀝니다"})])
+      ])]),
     nowCard(),
+    flowCard(),
     h("section",{class:"card"},[h("h2",{text:"이렇게 쓰시면 편합니다"}),h("div",{class:"how"},[h("div",{class:"mini"},[h("b",{text:"노트북에서, 패들렛 옆 탭으로"}),h("span",{text:"적은 내용을 복사해 패들렛 댓글과 워크시트에 바로 붙여 넣을 수 있습니다."})]),h("div",{class:"mini"},[h("b",{text:"워크시트는 파일에"}),h("span",{text:"길잡이는 순서와 도구를 보여 줍니다. 워크시트 1~4는 내려받은 파일에 작성해 패들렛에 올립니다."})]),h("div",{class:"mini"},[h("b",{text:"한 기기에서 계속"}),h("span",{text:"적은 내용과 표시는 이 기기에만 저장됩니다. 1차시에 적은 답이 4차시에 다시 나옵니다."})])])]),
     h("section",{class:"card"},[h("h2",{text:"시작 전 준비"}),ul,h("div",{class:"row"},[h("a",{class:"btn primary",href:PADLET,target:"_blank",rel:"noopener",text:"모듈 4 · 영어 패들렛 열기"}),h("a",{class:"btn",href:"https://aiedap.or.kr",target:"_blank",rel:"noopener",text:"AIEDAP 사이트"})])]),
     dayCard(),
@@ -586,7 +622,7 @@ function refS1(){
       ["<span class='rev'><del>It is very old and beautiful.</del> → <ins>자연과 불교 미술의 조화를 말하는 문장</ins></span>","왜 아름다운지가 빠져 있었다"],
       ["<span class='rev'><ins>자전거를 빌려 다니라는 문장을 새로 넣음</ins></span>","AI 초안은 어느 도시에나 맞는 안내 같아서, 경주다운 것을 넣고 싶었다"],
       ["“museum without walls”는 그대로 둠","찾아보니 실제로 쓰는 표현이어서 유지했다"]]),h("p",{class:"note",text:"최종 글에는 보이지 않던 학생 B의 판단이 이 기록에 남아 있습니다. 학생과 기록은 설명을 위해 구성한 가상 자료입니다."})],"r-b"),
-    det("평가에 포함되는 것, 포함되지 않는 것",null,[h("div",{class:"grid2"},[["① 언어적 판단","AI가 제안한 표현 중 무엇을 골랐고 무엇을 버렸는가, 그 이유는 무엇인가"],["② 맥락 판단","AI가 만든 영어가 듣는 사람과 상황, 문화 맥락에 맞는가"],["③ 정보 검증","AI가 준 내용을 원문이나 출처와 맞춰 보았는가"],["④ 학생의 몫","최종 글에 학생 자신이 하려던 말이 남아 있는가"]].map(function(x){return h("div",{class:"mini"},[h("b",{text:x[0]}),h("span",{text:x[1]})]);})),h("div",{class:"grid2"},[["도구를 다루는 능력","영어과 성취기준이 겨냥하는 수행이 아니다"],["프롬프트 작성 기술","수업에서 가르치지 않은 것을 평가하게 된다"],["AI 결과물의 완성도","학생이 아니라 도구의 성능을 평가하게 된다"]].map(function(x){return h("div",{class:"mini no"},[h("b",{text:x[0]}),h("span",{text:x[1]})]);}))],"r-in"),
+    det("평가에 포함되는 것, 포함되지 않는 것",null,[h("div",{class:"lab",text:"평가에 포함되는 것"}),h("div",{class:"grid2"},[["① 언어적 판단","AI가 제안한 표현 중 무엇을 골랐고 무엇을 버렸는가, 그 이유는 무엇인가"],["② 맥락 판단","AI가 만든 영어가 듣는 사람과 상황, 문화 맥락에 맞는가"],["③ 정보 검증","AI가 준 내용을 원문이나 출처와 맞춰 보았는가"],["④ 학생의 몫","최종 글에 학생 자신이 하려던 말이 남아 있는가"]].map(function(x){return h("div",{class:"mini"},[h("b",{text:x[0]}),h("span",{text:x[1]})]);})),h("div",{class:"lab",text:"평가에 포함되지 않는 것"}),h("div",{class:"grid2"},[["도구를 다루는 능력","영어과 성취기준이 겨냥하는 수행이 아니다"],["프롬프트 작성 기술","수업에서 가르치지 않은 것을 평가하게 된다"],["AI 결과물의 완성도","학생이 아니라 도구의 성능을 평가하게 된다"]].map(function(x){return h("div",{class:"mini no"},[h("b",{text:x[0]}),h("span",{text:x[1]})]);}))],"r-in"),
     det("세 가지 사례",null,[table(["","① 챗봇 역할극","② 초안 고쳐 쓰기","③ 기사 분석"],[["<b>AI의 역할</b>","학생과 대화하는 상대","검토해야 할 초안을 내놓는 쪽","많은 양을 다루는 분석 도구"],["<b>영어 활동</b>","교환학생에게 학교 축제를 안내한다","지역 문화를 소개하는 글을 다듬는다","여러 나라 기후 재난 기사를 비교한다"],["<b>수업 장면</b>","학생이 축제 일정과 장소를 영어로 안내하면, 챗봇이 교환학생이 되어 되묻거나 더 묻는다. 뜻이 통하지 않으면 학생은 표현을 바꾸어 다시 말한다.","학생이 소개할 내용을 메모로 정리해 AI에게 주면, AI가 영어 초안을 써 준다. 초안에는 문법 오류가 거의 없다. 학생은 초안을 읽고 자기 글로 다듬어 제출한다.","모둠이 여러 나라의 영어 기사 열 편을 AI에 넣어 나라별 요약과 공통점을 정리하게 한다. 학생은 그 정리를 바탕으로 비교 발표를 준비한다."]]),h("p",{class:"note",text:"모둠에서 맡은 사례에 대해 ‘학생의 무엇을 평가할지’와 ‘그 증거를 어디에서 모을지’를 패들렛 댓글로 적습니다."})],"r-case"),
     toolCase(),
     toolStd(),
@@ -623,7 +659,7 @@ function toolTitle(){
 }
 function refS3(){
   return [
-    det("Re-design이란",null,[table(["","이렇게 하면 일부만 바뀝니다","재설계"],[["<b>활동</b>","<span class='rev'><del>활동 두어 개를 다른 것으로 바꾼다</del></span>","목표와 증거를 먼저 정하고 활동을 다시 배치한다"],["<b>도구</b>","<span class='rev'><del>AI 도구를 최신 것으로 갈아 끼운다</del></span>","AI가 없으면 성립하지 않는 자리에 AI를 놓는다"],["<b>평가</b>","<span class='rev'><del>목표와 활동만 고치고 평가는 그대로 둔다</del></span>","바뀐 목표에 맞게 평가 계획도 함께 고친다"]])],"r-re"),
+    det("Re-design이란",null,[table(["","일부만 바뀌는 경우","재설계"],[["<b>활동</b>","<span class='dim'>활동 두어 개를 다른 것으로 바꾼다</span>","<b>목표와 증거를 먼저 정하고 활동을 다시 배치한다</b>"],["<b>도구</b>","<span class='dim'>AI 도구를 최신 것으로 갈아 끼운다</span>","<b>AI가 없으면 성립하지 않는 자리에 AI를 놓는다</b>"],["<b>평가</b>","<span class='dim'>목표와 활동만 고치고 평가는 그대로 둔다</span>","<b>바뀐 목표에 맞게 평가 계획도 함께 고친다</b>"]])],"r-re"),
     det("재설계 워크시트 일곱 칸과 강사 시연",null,[table(["칸","점검 질문","강사 수업으로 채운 예 (공통영어2 · 읽기)"],SEVEN.map(function(r){return ["<b>"+r[0]+"</b>",r[1],r[2]];})),h("p",{class:"note",text:"처음 구상은 ‘AI 요약을 읽고 논증의 뼈대 채우기’였습니다. ③에서 AI가 없어도 된다는 답이 나와 AI의 역할부터 다시 잡았습니다. 채우지 못한 칸은 4차시 동료 검토에서 의견을 구합니다."})],"r-seven"),
     det("영어과 문제해결 절차, AI와 학생의 몫",null,[table(["단계","AI가 하는 일","학생이 하는 일"],[["의사소통 과제 인식","실제 상황 자료를 보여 준다","목적과 듣는 사람을 정한다"],["맥락 이해","배경과 문화 정보를 정리한다","그 맥락이 맞는지 판단한다"],["언어 자료 분석","표현의 쓰임과 예문을 보여 준다","왜 그 표현을 고르는지 설명한다"],["표현 구상","초안과 다른 표현을 제안한다","최종 표현을 정하고 고친다"],["의사 전달 점검","발음과 읽기 쉬움을 점검한다","전달이 되었는지 스스로 평가한다"]]),h("p",{class:"note",text:"학생 쪽이 비어 있는 단계가 있다면 그 단계를 재설계해 주세요. (워크시트 3 · 2번)"})],"r-proc"),
     det("활동 뒤 정리 — 자주 막히는 두 곳","정리",[h("div",{class:"grid2"},[h("div",{class:"mini"},[h("b",{text:"③ AI의 역할"}),h("span",{text:"‘이 자료를 교사가 미리 만들어 주어도 되는가’를 먼저 물어봅니다. 된다면 학생마다 다른 결과를 받게 하거나, AI가 틀리거나 빠뜨리는 자리를 학생이 찾게 하는 길이 있습니다."})]),h("div",{class:"mini"},[h("b",{text:"② 증거"}),h("span",{text:"과정 기록은 한 줄짜리 칸으로 시작해 볼 수 있습니다. ‘고친 곳 하나와 그 이유’ 한 줄이면 처음 해 보는 반에서도 부담이 적습니다."})])])],"n-re"),
@@ -672,7 +708,7 @@ function refS4(){
     toolPick(), toolFb(),
     det("활동 뒤 정리 — 교실에서 바로 해 볼 한 가지","정리",[h("p",{text:"다음 쓰기 과제에 ‘고친 자리와 고친 이유’ 세 줄 칸을 덧붙여 보세요. 최종 글에서는 보이지 않던 학생의 판단이 기록에 남고, AI 초안을 거의 그대로 낸 학생에게도 배울 기회가 생깁니다."})],"n-end"),
     det("검토 준거 다섯 가지",null,[h("div",{class:"grid2"},CRIT.map(function(x){return h("div",{class:"mini"},[h("b",{text:x[0]}),h("span",{text:x[1]})]);})),h("p",{class:"note",text:"①~④는 1차시와 2차시에서 쓴 관점을 다시 쓰는 것이고, ⑤ 실행 가능성이 새로 더해졌습니다."})],"r-crit"),
-    det("피드백 문장 두 가지",null,[table(["","인상을 말하는 문장","실행을 돕는 문장"],[["<b>문장</b>","<span class='rev'><del>평가 요소가 부족합니다</del></span>","고친 이유를 적는 칸을 두면 증거가 남을 것 같습니다"],["<b>읽는 사람에게</b>","무엇을 어떻게 고쳐야 할지 알기 어렵다","고칠 자리와 방법이 함께 보인다"],["<b>받는 사람은</b>","방어하게 된다","바로 적용해 볼 수 있다"]])],"r-fb")
+    det("피드백 문장 두 가지",null,[table(["","인상을 말하는 문장","실행을 돕는 문장"],[["<b>문장</b>","<span class='dim'>평가 요소가 부족합니다</span>","<b>고친 이유를 적는 칸을 두면 증거가 남을 것 같습니다</b>"],["<b>읽는 사람에게</b>","무엇을 어떻게 고쳐야 할지 알기 어렵다","고칠 자리와 방법이 함께 보인다"],["<b>받는 사람은</b>","방어하게 된다","바로 적용해 볼 수 있다"]])],"r-fb")
   ];
 }
 function viewSess(s){

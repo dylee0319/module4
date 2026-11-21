@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>모듈 4 영어 길잡이</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* 레이아웃: 한 단 880px. 위에는 차시 탭, 본문은 '지금 할 일 → 활동 카드 → 참고와 도구' 순서. 고쳐 쓴 자리를 보여 주는 교정 표시(지운 말과 넣은 말)가 유일한 장식. */
+:root{
+  --bg:#f3f5f9; --surface:#ffffff; --sunk:#e9edf4; --ink:#14213d; --muted:#5a667c; --line:#d5dbe6;
+  --accent:#2a55d9; --accent-ink:#ffffff; --accent-soft:#e4ebff;
+  --mark:#d93a45; --ok:#16855a; --ok-soft:#dff3ea; --warn:#a15c00; --warn-soft:#fdeed3;
+  --shadow:0 1px 2px rgba(20,33,61,.06),0 6px 20px rgba(20,33,61,.06);
+  --text:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0e131d; --surface:#171d2b; --sunk:#111725; --ink:#e9edf6; --muted:#9ba7bd; --line:#2a3347;
+  --accent:#8aa6ff; --accent-ink:#0e131d; --accent-soft:#1f2a4a;
+  --mark:#ff7f86; --ok:#57c995; --ok-soft:#16302a; --warn:#f0b35a; --warn-soft:#33270f;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.3); color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0e131d; --surface:#171d2b; --sunk:#111725; --ink:#e9edf6; --muted:#9ba7bd; --line:#2a3347;
+  --accent:#8aa6ff; --accent-ink:#0e131d; --accent-soft:#1f2a4a;
+  --mark:#ff7f86; --ok:#57c995; --ok-soft:#16302a; --warn:#f0b35a; --warn-soft:#33270f;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.3); color-scheme:dark }
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--text);font-size:16px;line-height:1.65;word-break:keep-all;overflow-wrap:anywhere}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+a{color:var(--accent)}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+h1,h2,h3{text-wrap:balance;line-height:1.3;margin:0}
+p{margin:0}
+.wrap{max-width:880px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* 머리띠 */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:16px;min-height:56px}
+.brand{font-weight:700;letter-spacing:-.01em;white-space:nowrap;display:flex;align-items:baseline;gap:8px}
+.brand small{font-weight:500;color:var(--muted);font-size:.8rem}
+.tabs{display:flex;gap:4px;overflow-x:auto;min-width:0;margin-left:auto;scrollbar-width:none;padding-block:8px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:0;background:transparent;padding:8px 12px;border-radius:999px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;font-size:.93rem}
+.tab:hover{background:var(--sunk);color:var(--ink)}
+.tab[aria-current="page"]{background:var(--ink);color:var(--surface)}
+.tab .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--mark);margin-left:6px;vertical-align:middle}
+
+main{padding-block:28px 120px}
+.view{display:flex;flex-direction:column;gap:20px}
+
+/* 첫 화면 */
+.hero{display:flex;flex-direction:column;gap:14px;padding-block:8px 4px}
+.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;color:var(--muted)}
+.hero h1{font-size:clamp(1.7rem,5.2vw,2.6rem);font-weight:700;letter-spacing:-.025em}
+.hero h1 del{color:var(--muted);text-decoration-color:var(--mark);text-decoration-thickness:.09em;font-weight:500}
+.hero h1 ins{text-decoration:none;color:var(--ink);position:relative;white-space:nowrap}
+.hero h1 ins::after{content:"";position:absolute;left:-2px;right:-2px;bottom:.04em;height:.32em;background:var(--mark);opacity:.22;border-radius:3px}
+.hero p{color:var(--muted);max-width:60ch}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px;min-width:0}
+.card h2{font-size:1.12rem}
+.card h3{font-size:1rem}
+.sub{color:var(--muted);font-size:.92rem}
+
+.now{border-color:var(--accent);background:linear-gradient(0deg,var(--surface),var(--surface)) padding-box}
+.now-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--sunk);color:var(--muted);white-space:nowrap}
+.pill.live{background:var(--accent);color:var(--accent-ink)}
+.pill.live::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;animation:pulse 1.6s ease-in-out infinite}
+.pill.k-group{background:var(--warn-soft);color:var(--warn)}
+.pill.k-solo{background:var(--accent-soft);color:var(--accent)}
+.pill.k-talk{background:var(--sunk);color:var(--muted)}
+.pill.k-pair{background:var(--ok-soft);color:var(--ok)}
+@keyframes pulse{50%{opacity:.35}}
+.now h2{font-size:1.35rem;letter-spacing:-.01em}
+.now .left{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--muted);font-size:.9rem;margin-left:auto}
+.bar{height:6px;background:var(--sunk);border-radius:99px;overflow:hidden}
+.bar > i{display:block;height:100%;background:var(--accent);border-radius:99px;width:0;transition:width .6s}
+
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 14px;border-radius:10px;font-weight:600;font-size:.93rem;cursor:pointer;text-decoration:none;min-height:42px}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.quiet{border-color:transparent;background:var(--sunk)}
+.btn.small{min-height:34px;padding:5px 10px;font-size:.84rem}
+
+/* 하루 일정 */
+.day{display:grid;gap:14px}
+.sess{display:grid;grid-template-columns:86px 1fr;gap:4px 16px;align-items:start}
+.sess-h{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;padding-bottom:6px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.sess-h button{border:0;background:none;padding:0;font-weight:700;font-size:1rem;cursor:pointer;color:var(--ink);text-align:left}
+.sess-h button:hover{color:var(--accent)}
+.sess-h span{color:var(--muted);font-size:.86rem}
+.seg{display:contents}
+.seg time{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:.86rem;color:var(--muted);padding-top:3px}
+.seg div{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;padding-block:2px}
+.seg.past time,.seg.past div{opacity:.5}
+.seg.cur div b{color:var(--accent)}
+.seg.cur time{color:var(--accent);font-weight:600}
+.seg small{color:var(--muted)}
+.gapline{grid-column:1/-1;color:var(--muted);font-size:.84rem;font-family:var(--mono);padding:2px 0 0}
+
+/* 체크 목록 */
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.checks label{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;padding:8px 10px;border-radius:10px;cursor:pointer}
+.checks label:hover{background:var(--sunk)}
+.checks input{appearance:none;width:22px;height:22px;border:2px solid var(--line);border-radius:7px;margin:2px 0 0;display:grid;place-content:center;background:var(--surface);cursor:pointer;flex:none}
+.checks input::after{content:"";width:11px;height:6px;border-left:2.5px solid var(--accent-ink);border-bottom:2.5px solid var(--accent-ink);transform:rotate(-45deg) translate(1px,-1px);opacity:0}
+.checks input:checked{background:var(--ok);border-color:var(--ok)}
+.checks input:checked::after{opacity:1}
+.checks input:checked + span{color:var(--muted)}
+.checks .n{font-family:var(--mono);color:var(--muted);font-size:.82rem;margin-right:6px}
+.checks small{display:block;color:var(--muted)}
+
+/* 차시 화면 */
+.s-head{display:flex;flex-direction:column;gap:8px}
+.s-head h1{font-size:clamp(1.4rem,4.4vw,1.9rem);letter-spacing:-.02em}
+.q{border-left:4px solid var(--mark);padding:6px 0 6px 14px;font-size:1.06rem;font-weight:600}
+.act-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.act-meta time{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:.86rem;color:var(--muted)}
+.act.is-now{border-color:var(--accent)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.92rem;border-top:1px dashed var(--line);padding-top:12px}
+.kv dt{color:var(--muted);white-space:nowrap}
+.kv dd{margin:0}
+.note{background:var(--sunk);border-radius:10px;padding:10px 12px;font-size:.92rem;color:var(--muted)}
+.talk{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:10px 14px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);font-size:.93rem}
+.talk time{font-family:var(--mono);font-size:.86rem}
+
+h2.sec{font-size:.86rem;font-family:var(--mono);letter-spacing:.05em;color:var(--muted);font-weight:600;margin-top:12px}
+details.card{padding:0;gap:0}
+details.card > summary{list-style:none;cursor:pointer;padding:16px 20px;font-weight:600;display:flex;align-items:center;gap:10px}
+details.card > summary::-webkit-details-marker{display:none}
+details.card > summary::after{content:"";margin-left:auto;width:9px;height:9px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);transition:transform .2s;flex:none}
+details.card[open] > summary::after{transform:rotate(-135deg)}
+details.card > summary .tag{font-size:.74rem;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
+details.card > .body{padding:0 20px 20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+
+.tbl{overflow-x:auto;min-width:0}
+table{border-collapse:collapse;width:100%;min-width:540px;font-size:.92rem}
+th,td{text-align:left;vertical-align:top;padding:9px 10px;border-bottom:1px solid var(--line)}
+th{font-size:.8rem;color:var(--muted);font-weight:600;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.rev del{color:var(--muted);text-decoration-color:var(--mark)}
+.rev ins{text-decoration:none;border-bottom:2px solid var(--mark)}
+.code{font-family:var(--mono);font-size:.84rem;color:var(--accent);white-space:nowrap}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.mini{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.mini b{font-size:.95rem}
+.mini span{color:var(--muted);font-size:.9rem}
+.mini.no b{text-decoration:line-through;text-decoration-color:var(--mark)}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:.9rem;font-weight:600;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.std{display:grid;gap:8px}
+.std > div{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start;padding:10px 12px;border:1px solid var(--line);border-radius:12px}
+
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field > span{font-size:.86rem;font-weight:600;color:var(--muted)}
+input[type=text],input[type=number],textarea{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 12px;min-height:44px}
+textarea{resize:vertical;min-height:84px;line-height:1.6}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.out{font-family:var(--mono);font-size:.9rem;background:var(--sunk);border-radius:12px;padding:14px;white-space:pre-wrap;min-height:54px}
+.big{font-size:1.5rem;font-weight:700;letter-spacing:-.01em}
+.big b{color:var(--accent);font-family:var(--mono)}
+.said{font-size:.86rem;color:var(--ok);font-weight:600;min-height:1.4em}
+
+.crit{display:grid;gap:8px}
+.crit > div{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.crit > div:last-child{border-bottom:0}
+.crit small{display:block;color:var(--muted)}
+.seg3{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg3 button{border:0;background:var(--surface);padding:7px 13px;cursor:pointer;font-weight:700;min-width:42px}
+.seg3 button + button{border-left:1px solid var(--line)}
+.seg3 button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+
+.meter{display:grid;gap:10px}
+.meter > div{display:grid;grid-template-columns:minmax(96px,auto) 1fr auto;gap:10px;align-items:center;font-size:.92rem}
+.meter .bar{height:10px}
+.meter .v{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.meter .b2 i{background:var(--ok)}
+
+.essays{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.essay{border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0;word-break:normal}
+.essay .tagAB{font-family:var(--mono);font-weight:600;font-size:.86rem;color:var(--muted)}
+.essay h3{font-size:1rem}
+.essay p{line-height:1.7;font-size:.97rem}
+.essay.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.prog{display:flex;align-items:center;gap:10px;font-size:.84rem;color:var(--muted);font-family:var(--mono)}
+.prog .bar{flex:1;max-width:220px}
+.prog .bar i{background:var(--ok)}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.strip span{font-size:.76rem;font-family:var(--mono);color:var(--muted);border-top:4px solid var(--sunk);padding-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.strip span.d{border-top-color:var(--ok)}
+.strip span.c{border-top-color:var(--accent);color:var(--accent);font-weight:600}
+.typ{display:grid;gap:10px}
+.typ dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font-size:.95rem}
+.typ dt{color:var(--muted);white-space:nowrap}
+.typ dd{margin:0}
+.typ ul{margin:0;padding-left:1.1em;display:grid;gap:4px;font-size:.93rem}
+.quote{border-left:3px solid var(--line);padding:2px 0 2px 12px;color:var(--ink);word-break:normal}
+.lab{font-size:.8rem;font-weight:600;color:var(--muted);font-family:var(--mono);letter-spacing:.03em}
+.then{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+/* 타이머 */
+.timer{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--ink);color:var(--surface);padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.timer .in{max-width:880px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.timer .t{font-family:var(--mono);font-size:1.5rem;font-weight:600;font-variant-numeric:tabular-nums}
+.timer .l{font-size:.92rem;opacity:.85;min-width:0;flex:1}
+.timer button{border:1px solid currentColor;background:transparent;color:inherit;border-radius:9px;padding:6px 12px;font-weight:600;cursor:pointer;opacity:.9}
+.timer.done{background:var(--mark)}
+
+footer{color:var(--muted);font-size:.84rem;padding-block:8px 0}
+@media (max-width:560px){
+  .brand{display:none}
+  .tabs{margin-left:0;flex:1;justify-content:space-between}
+  .tab{padding:8px 9px;font-size:.88rem}
+  .card{padding:16px}
+  .sess{grid-template-columns:62px 1fr;gap:4px 10px}
+  .meter > div{grid-template-columns:1fr auto}
+  .meter .bar{grid-column:1/-1;order:3}
+}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">모듈 4 길잡이 <small>영어 · 11. 22.(일)</small></div>
+    <nav class="tabs" id="tabs" aria-label="차시"></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="view" class="view"></div>
+  <footer>
+    <p>적은 내용과 표시한 것은 이 기기에만 저장되고 어디로도 보내지 않습니다. 워크시트는 파일에 작성해 패들렛에 올려 주세요.</p>
+    <p>AIEDAP 마스터교원 신규연수 · 경북권역 · 모듈 4 · 영어 · 강사: 울산외고 교사 이동윤</p>
+  </footer>
+</main>
+
+<div class="timer" id="timer" hidden role="status" aria-live="off">
+  <div class="in">
+    <span class="t" id="tm">00:00</span>
+    <span class="l" id="tl"></span>
+    <button type="button" id="tp">잠시 멈춤</button>
+    <button type="button" id="tx">닫기</button>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var PADLET="https://padlet.com/ufl00319/aiedap-4-_20261122-s025mxk8kzbwqqu8eet5";
+var DAY=[2026,10,22]; // 2026-11-22 (월은 0부터)
+
+/* ---------- 저장 ---------- */
+var KEY="m4-eng-guide-v1", S={};
+try{ S=JSON.parse(localStorage.getItem(KEY)||"{}")||{}; }catch(e){ S={}; }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
+function get(k,d){ return (k in S)?S[k]:d; }
+function set(k,v){ S[k]=v; save(); }
+
+/* ---------- 내용 ---------- */
+var SESS=[
+ {id:"s1",n:1,title:"AI 융합수업에서의 평가",time:"11:00~11:50",ws:"워크시트 1 · 나의 수업 평가 점검표",
+  q:"AI 융합수업에서는 학생의 무엇을, 어떻게 평가해야 하는가",
+  segs:[
+   {t:"11:00",m:15,k:"talk",title:"두 글 비교와 평가 대상",desc:"같은 과제로 쓴 학생 글 두 편을 읽고, AI 융합수업에서 평가 대상이 어떻게 달라지는지 봅니다."},
+   {id:"a11",t:"11:15",m:15,k:"group",title:"사례 비교",open:"패들렛 ‘1차시 · 사례 비교’",out:"맡은 사례의 게시물에 댓글",
+    steps:["배정받은 사례를 읽고 이 수업에서 학생의 무엇을 평가할지 정합니다.","그 판단의 증거를 어디에서 모을 수 있을지 적습니다.","정리한 내용을 패들렛 ‘1차시 · 사례 비교’의 해당 사례에 댓글로 올립니다.","오류가 드문 AI 글을 두고, 수업에서 학생에게 무엇을 고치게 할 수 있을지 모둠에서 이야기합니다."],jump:[["세 가지 사례","r-case"],["댓글 쓰기","t-case"]]},
+   {id:"a12",t:"11:30",m:18,k:"solo",title:"성취기준 찾기 · 나의 수업 평가 점검표",open:"워크시트 1, 참고 자료 1번(성취기준 표)",out:"패들렛 ‘워크시트 1’ 칸에 파일 올리기",
+    steps:["자신이 실천한 수업의 유형을 표시하고, 네 항목으로 점검합니다. (1 · 2번)","자신의 수업에서 학생이 실제로 한 AI 관련 활동을 담을 수 있는 성취기준을 고릅니다. (3번)","고른 성취기준을 평가 요소의 형태로 다시 쓰고, 그 도달을 무엇으로 확인할지 학습의 증거를 적습니다. (3번)","개선할 점을 적은 뒤, 워크시트 1을 패들렛에 올립니다. (4번)"],
+    note:"빈칸으로 남은 자리가 2차시 성찰과 3차시 재설계의 출발점이 됩니다.",jump:[["성취기준 찾기","t-std"]]}
+  ],end:"11:50",after:"쉬는 시간 10분"},
+ {id:"s2",n:2,title:"나의 AI 융합 영어수업 성찰하기",time:"12:00~12:50",ws:"워크시트 2 · 성찰 보고서",
+  q:"지금까지 배운 관점으로 내 수업을 다시 본다면 무엇을 바꾸어야 하는가",
+  segs:[
+   {t:"12:00",m:10,k:"talk",title:"성찰 항목과 분석 예시",desc:"모듈 1에서는 렌즈 하나로 우수 사례를 분석했습니다. 이번에는 여섯 렌즈로 자신의 수업을 분석합니다."},
+   {id:"a21",t:"12:10",m:20,k:"solo",title:"여섯 항목 진단과 AI 융합 · AI 활용 판별하기",open:"실천보고서, 워크시트 1, 워크시트 2 (1 · 2 · 3 · 5번)",out:"4번과 6번은 다음 활동에서 씁니다",
+    steps:["가장 잘 되었다고 생각한 장면과 가장 아쉬웠던 장면을 각각 한 문장으로 적습니다. (1번)","여섯 항목마다 진단하고, 그렇게 판단한 근거가 된 수업 장면을 함께 적습니다. (2번)","체크리스트 12문항을 자신의 수업에 적용해 표시하고, 결과를 해석해 근거가 된 수업 장면을 적습니다. (3번)","영역 1에서 알게 된 것에 비추어 다르게 설계할 지점을 적습니다. (5번)"],
+    note:"1차시 점검표에서 빈칸이 많았던 항목부터 살펴보시면 좋습니다.",jump:[["체크리스트 12문항","t-chk"]]},
+   {id:"a22",t:"12:30",m:10,k:"pair",title:"짝과 판별 결과 나누기",open:"워크시트 2 (4번), 지도안",out:"한 사람에 5분씩, 옆자리 선생님과",
+    steps:["짝에게 판별 결과와 그렇게 판단한 근거가 된 수업 장면을 설명합니다.","짝과 지도안과 워크시트 2를 바꾸어 보고 서로에게 질문 세 개씩을 남깁니다.","받은 질문 가운데 답하기 어려운 것에 표시합니다."],
+    note:"이 판별 결과는 3차시에서 수업 유형을 고를 때 다시 씁니다."},
+   {id:"a23",t:"12:40",m:8,k:"solo",title:"성찰 보고서와 우선 과제",open:"워크시트 2 (6번)",out:"패들렛 ‘워크시트 2’ 칸에 파일 올리기",
+    steps:["앞의 활동에서 적은 기록을 확인하고 빠진 곳만 채웁니다.","재설계에서 먼저 손볼 과제를 세 개 이내로 고릅니다.","과제마다 무엇을, 왜, 어느 정도로 바꿀지 한 문장으로 씁니다.","작성한 워크시트 2를 패들렛에 올립니다."],
+    note:"여기서 고른 과제가 3차시 재설계 워크시트의 작업 목록이 됩니다."}
+  ],end:"12:50",after:"점심 · 14:00에 다시 시작"},
+ {id:"s3",n:3,title:"나의 AI 융합 영어수업 Re-design하기",time:"14:00~14:50",ws:"워크시트 3 · 재설계 워크시트",
+  q:"목표와 증거를 먼저 정하고, 활동을 다시 배치한다",
+  segs:[
+   {t:"14:00",m:13,k:"talk",title:"Re-design · 수업 유형 · 강사 시연",desc:"강사의 수업 하나를 워크시트 일곱 칸에 따라 다시 짜는 과정을 봅니다."},
+   {id:"a31",t:"14:13",m:32,k:"solo",title:"재설계 워크시트 작성과 지도안 반영",open:"워크시트 3, AIEDAP ‘AI 융합수업 설계해보기’",out:"초안이 완성되지 않아도 괜찮습니다. 남은 부분은 4차시에 이어 갑니다",
+    steps:["네 유형 중 하나를 고르고, 워크시트 일곱 칸을 목표와 증거부터 채웁니다.","1차시에 적은 평가 요소 · 학습의 증거와 어긋나는 곳을 찾아 고쳐 맞춥니다.","워크시트에 적은 내용을 플랫폼으로 옮겨 고른 유형에 맞추어 지도안 초안을 만듭니다.","재설계 전과 후가 무엇이 달라졌는지 한 문장으로 맨 위에 적어 봅니다."],
+    note:"목표와 활동을 바꾸었다면 평가 계획도 함께 고쳐 주세요.",jump:[["수업 유형과 예시","t-types"],["일곱 칸 점검 질문","r-seven"],["시연 예시","r-demo"]]},
+   {id:"a32",t:"14:45",m:3,k:"solo",title:"지도안 저장과 워크시트 3 올리기",open:"AIEDAP 플랫폼, 패들렛 ‘워크시트 3’",out:"게시물 제목: 내 번호 · 재설계 전후 한 문장",
+    steps:["플랫폼에서 작성하던 지도안을 저장합니다.","자리 순서대로 번호를 세어 내 번호를 정합니다.","워크시트 3을 패들렛에 올립니다. 게시물 제목은 내 번호와 재설계 전후 한 문장으로 적습니다.","4차시 동료 검토를 위해 워크시트 3과 워크시트 4를 열어 둡니다."],jump:[["게시물 제목 만들기","t-title"]]}
+  ],end:"14:50",after:"쉬는 시간 10분"},
+ {id:"s4",n:4,title:"공유 및 환류하기",time:"15:00~15:50",ws:"워크시트 4 · 공유 및 환류 기록",
+  q:"이 지도안을 내 교실에서 이대로 할 수 있는가",
+  segs:[
+   {t:"15:00",m:5,k:"talk",title:"검토 준거와 피드백 작성 방법",desc:"다섯 준거와, 실행을 돕는 피드백 문장을 확인합니다."},
+   {id:"a41",t:"15:05",m:16,k:"solo",title:"갤러리 워크 — 자리에서 두 편 검토",open:"패들렛 ‘워크시트 3’ 칸, 워크시트 4의 피드백 카드",out:"검토한 게시물에 댓글 · 한 편에 8분",
+    steps:["패들렛 ‘워크시트 3’에서 내 번호 다음 두 편(+1번, +2번)을 엽니다. 끝 번호 다음은 1번입니다.","다섯 준거에 따라 확인하고, 피드백 카드의 순서대로 그 게시물에 댓글을 씁니다.","내 교실에서 이대로 할 수 있는지를 꼭 적습니다."],
+    note:"아래 도구로 검토할 두 편을 확인하고 댓글을 만들 수 있습니다.",jump:[["검토할 두 편","t-pick"],["피드백 댓글 쓰기","t-fb"]]},
+   {id:"a42",t:"15:21",m:12,k:"solo",title:"피드백 반영",open:"내 게시물에 달린 댓글, 워크시트 4 (2번)",out:"워크시트 3과 지도안 고치기",
+    steps:["받은 피드백을 읽고 받아들일 것과 그러지 않을 것을 나눕니다.","받아들이지 않기로 한 것은 그 이유를 한 줄로 적습니다.","받아들인 것을 반영해 지도안을 고칩니다."],
+    note:"모든 피드백을 반영할 필요는 없습니다."},
+   {id:"a43",t:"15:33",m:8,k:"solo",title:"지도안 제출 · 실천 계획과 나눔",open:"AIEDAP 플랫폼, 워크시트 4 (3 · 4번)",out:"두 절차를 마친 화면을 강사나 보조강사에게 보여 주기",
+    steps:["지도안 화면 아래의 [공유마당에 공유하기]를 누릅니다.","나의 역량 분석 대시보드 → 수료 제출물 제출 → 「AI융합수업설계지도안 제출」에 파일을 올립니다.","언제, 어느 학년, 어느 학급, 어느 단원에 적용할지 적습니다. (3번)","동료 교원과 어떻게 나눌지 한 가지 이상 적습니다. (4번)"],
+    note:"제출은 두 절차를 모두 하셔야 합니다. 4번에 적은 나눔 방안은 모듈 5의 전문성 개발 활동계획서로 이어집니다."},
+   {t:"15:41",m:5,k:"all",title:"대표 사례 공유",desc:"두세 분께 듣습니다. “재설계 전에는 ___, 재설계 후에는 ___. 바꾼 이유는 ___.” 듣는 동안 내 지도안에 적용해 볼 점을 메모해 주세요."},
+   {id:"a44",t:"15:46",m:4,k:"solo",title:"모듈 4 돌아보기",open:"워크시트 4 (5번)",out:"패들렛 ‘워크시트 4’ 칸에 파일 올리기",
+    steps:["1차시 첫 활동(글 A · B 비교)에서 생각한 답과 지금의 답을 나란히 적습니다.","작성한 워크시트 4를 패들렛에 올립니다."]}
+  ],end:"15:50",after:"모듈 4 마침"}
+];
+var KIND={all:["전체","k-talk"],talk:["설명","k-talk"],group:["모둠","k-group"],solo:["개별","k-solo"],pair:["짝","k-pair"]};
+
+var STD=[
+ ["AI가 쓴 글 고치기","[10공영1-02-06] · [10공영2-02-07]","어휘나 표현을 점검하여 내용을 명확하게 전달한다"],
+ ["AI가 쓴 글 고치기","[10기영1-02-06]","말이나 글의 목적에 맞게 내용이나 표현을 점검하여 고쳐 쓴다"],
+ ["AI 결과 따져 보기","[10공영2-01-07]","다양한 매체의 말이나 글을 비판적으로 이해한다"],
+ ["AI 결과 따져 보기","[10공영1-01-08]","말이나 글에 나타난 다양한 관점이나 의견을 포용적인 태도로 분석한다"],
+ ["AI 결과 따져 보기","[9영01-09]","다양한 관점을 존중하는 태도로 듣거나 읽는다"],
+ ["AI 요약과 견주기","[10공영1-02-05] · [10공영2-02-05]","듣거나 읽은 내용을 요약하여 말하거나 기술한다"],
+ ["매체로 표현하기","[10공영1-02-07] · [10공영2-02-08]","적절한 전략과 다양한 매체를 활용하여 상황과 목적에 맞게 말하거나 쓴다"],
+ ["매체로 표현하기","[10공영2-02-06]","다양한 소통의 목적에 맞게 말하거나 글로 표현한다"],
+ ["AI 활용 윤리","[9영02-09]","적절한 매체를 활용하여 정보 윤리를 준수하며 말하거나 쓴다"]
+];
+var CHK=["학생들이 AI에 대해 새로운 개념을 배우거나 AI와 관련된 내용을 학습하는가?","AI가 학습 과정에 도움을 주거나 교과 내용을 더 잘 이해하도록 돕는가?","학생들이 AI와 관련된 개념이나 원리를 설명하거나 탐구하는 활동이 포함되어 있는가?","AI가 학생들의 학습 과정에서 정보 제공, 분석, 자동화 등의 기능을 수행하는가?","AI를 사용하여 학생들이 직접 무언가를 만들어 보거나 해결해야 하는 문제가 있는가?","AI의 작동 원리나 결과를 해석하는 활동이 포함되어 있는가?","학생들이 AI를 활용한 활동을 통해 기존과 다른 접근 방식이나 창의적인 해결 방법을 찾도록 하는가?","AI가 학생들의 학습을 보조하거나 평가를 돕는 역할을 하는가?","AI 사용과 관련된 사회적 영향이나 윤리적 이슈에 대해 논의하는 시간이 있는가?","AI의 한계나 위험성을 비판적으로 검토하는 과정이 포함되어 있는가?","AI의 기능과 원리를 깊이 탐색하거나, AI가 어떻게 학습하고 작동하는지 분석하는가?","AI를 활용한 단순 사용이 아니라, AI 자체를 연구하거나 새로운 활용 방법을 고민하는가?"];
+var FUSE=[1,3,5,6,7,9,11,12], USE=[2,4,8,10];
+var CRIT=[["① 목표와 성취기준","학습목표가 영어과 성취기준에 근거해 적혀 있는가"],["② 앞뒤 정합성","목표 · AI의 역할 · 활동 · 평가가 한 방향을 보고 있는가"],["③ 학생의 자리","AI가 하는 일과 학생이 하는 일이 구분되어 있는가"],["④ 학습의 증거","과정과 결과를 함께 볼 수 있는 증거가 마련되어 있는가"],["⑤ 실행 가능성","수업 시수와 기기 여건에서 실제로 할 수 있는가"]];
+var SEVEN=[["① 목표","이 수업이 도달시키려는 영어 수행은 무엇인가. 성취기준으로 쓸 수 있는가","AI 요약에서 빠진 논증을 찾아 자기 말로 보충한다. [10공영2-01-07]"],["② 증거","그 도달을 무엇으로 확인하는가. 과정에서 남는 기록은 무엇인가","최종 요약문과 ‘고친 자리와 고친 이유’ 기록"],["③ AI의 역할","AI가 없으면 이 수업이 성립하지 않는가","학생마다 다른 요약을 받아 서로 다른 빈 곳을 찾게 한다"],["④ 학생의 자리","판단하고 고르고 만들어 내는 일을 학생이 하는 지점은 어디인가","요약을 받기 전에 ‘논증의 뼈대’를 학생이 먼저 채운다"],["⑤ 활동","목표와 증거로 이어지는 활동의 순서인가. 중간에 끊기는 곳은 없는가","논증의 뼈대(학생 먼저) → AI 요약 받기 → 빠진 곳 찾기 → 고친 이유 기록"],["⑥ 수준","영어 숙달도가 다른 학생들을 어떻게 다룰 것인가","아직 정하지 못함 · 4차시에 의견을 구할 예정"],["⑦ 전이","이 수업에서 배운 것이 교실 밖으로 이어질 통로가 있는가","아직 정하지 못함"]];
+
+var AB={
+ A:["Introducing Gyeongju, the City of History","Gyeongju is a very beautiful city in South Korea. It is famous for its long history. You can see many ancient tombs everywhere in the city. There is also a famous temple called Bulguksa. It is very old and beautiful. Many tourists visit Gyeongju to see these historic places. If you visit South Korea, you should definitely come to Gyeongju. It is a great place to learn about Korean culture and history. I hope you have a wonderful time in Gyeongju."],
+ B:["The Heart of Korean History: Gyeongju","Gyeongju is known as a museum without walls because the entire city is filled with history from the Silla Dynasty. While you might see many ancient burial mounds, they are not just hills; they are royal tombs that tell the stories of ancient kings. I highly recommend visiting Bulguksa Temple, not just for its architecture, but for the peaceful atmosphere that represents the harmony of nature and Buddhist art. Unlike a standard city tour, I suggest renting a bike to travel between the sites, which lets you feel the unique, slow-paced charm of Gyeongju that you cannot find in Seoul. It is a place where the past and present live together."]};
+var TYPES=[
+ {n:"데이터 분석",what:"공공데이터나 실험 데이터를 모아 분석하고 시각화한다",fit:"수월하다",ex:"우리 지역 관광지의 영문 리뷰를 분석해 개선안을 제안한다",ai:"많은 양의 리뷰를 요약하고 감정을 분류한다",st:"AI가 잘못 분류한 리뷰를 찾아 그 이유를 영어 표현으로 설명한다",
+  acts:["외국인이 남긴 영문 리뷰를 직접 읽고, 불편을 겪은 대목을 영어로 요약해 모둠에 공유하기","모둠별 요약을 교실에서 영어로 발표하고, 다른 모둠의 발표에 영어로 질문하거나 반론 제기하기","수신자·근거·요청을 갖춘 영문 제안 이메일을 작성하고, 짝 모둠이 받는 사람 입장에서 영어로 회신 써 주기","개선안을 반영한 영문 안내 문구를 작성해 교내 영어 게시판이나 학교 홈페이지 영문 안내에 게시하기","AI의 감정 분류가 놓친 반어·완곡 표현을 찾아 제안문의 근거로 활용하기"]},
+ {n:"AI 프로그램 개발",what:"문제를 정의하고 알고리즘을 설계해 프로그램을 만든다",fit:"수월하다",ex:"교환학생을 위한 학교 안내 영어 챗봇을 만든다",ai:"질문의 의도를 분류하고 답을 연결한다",st:"잘못 분류된 질문을 찾아 표현이 모호한 곳을 고친다",
+  acts:["학교 소개 영문 자료와 외국 학교의 안내 웹사이트를 읽고, 처음 온 사람이 실제로 물을 만한 질문을 영어로 정리하기","처음 온 사람이 바로 따라 할 수 있는 수준과 어조로 안내 응답문을 영어로 작성하기","다른 반 학생이나 후배를 실제 사용자로 초대해 챗봇을 써 보게 하고, 챗봇이 답하지 못한 질문은 직접 영어로 이어 안내하기","사용자가 영어로 남긴 사용 후기를 반영해 응답문 고쳐 쓰기","잘못 분류된 질문을 표현의 모호성 관점에서 진단하여 수정에 반영하기"]},
+ {n:"AI 기반 창작",what:"AI와 함께 글·이미지·영상 작품을 만든다",fit:"수월하다",ex:"우리 지역 문화를 소개하는 영어 캠페인 콘텐츠를 만든다",ai:"초안 글과 이미지를 만들어 준다",st:"문화 설명이 빠지거나 잘못 옮겨진 곳을 찾아 고쳐 쓴다",
+  acts:["소개할 문화 요소를 정하기 위해 국문 자료와 영문 자료를 함께 읽고, 전달할 내용을 영어로 정리하기","실제 청자(우리 학교를 찾는 외국인, 학교 홈페이지 영문 페이지 방문자 등)를 정하고 그 사람에게 말 걸듯 내레이션을 영어로 작성하기","완성한 콘텐츠를 교내 전시나 학교 홈페이지·학급 게시판에 실제로 게시하고, 관람한 학생들에게 영어로 소개하며 질문에 답하기","관람자가 영어로 남긴 반응을 읽고 영어로 답글 쓰기","AI 초안에서 우리 문화 설명이 빠지거나 잘못 옮겨진 곳을 찾아 자기 표현으로 고쳐 쓰기"]},
+ {n:"피지컬 컴퓨팅",what:"센서와 장치를 AI와 연결해 산출물을 만든다",fit:"난도가 높다",ex:"영어 음성을 알아듣는 학교 안내 장치를 만든다",ai:"영어 발화를 인식하고 분류한다",st:"인식에 실패한 발화를 발음과 강세의 관점에서 분석해 대본을 고친다",
+  acts:["실제 방문 상황을 상정해 안내 대본을 영어로 쓰고, 짝과 역할극으로 주고받으며 다듬기","완성한 장치 앞에서 다른 학급 학생이나 후배에게 영어로 직접 안내하기","장치가 알아듣지 못한 부분은 이어받아 영어로 안내하고, 이용자에게 영어로 후기를 물어 듣기","인식에 실패한 사례를 발음·강세·표현 차이의 관점에서 분석하여 대본과 발화 수정하기"]}];
+var CASES=["① 챗봇 역할극","② 초안 고쳐 쓰기","③ 기사 분석"];
+
+/* ---------- 도우미 ---------- */
+function h(tag,attrs,kids){ var e=document.createElement(tag); if(attrs) for(var k in attrs){ if(k==="class") e.className=attrs[k]; else if(k==="html") e.innerHTML=attrs[k]; else if(k==="text") e.textContent=attrs[k]; else if(k.slice(0,2)==="on") e.addEventListener(k.slice(2),attrs[k]); else if(attrs[k]!==null&&attrs[k]!==undefined) e.setAttribute(k,attrs[k]); } (kids||[]).forEach(function(c){ if(c) e.appendChild(typeof c==="string"?document.createTextNode(c):c); }); return e; }
+function mins(t){ var p=t.split(":"); return (+p[0])*60+(+p[1]); }
+function hm(x){ var a=Math.floor(x/60), b=x%60; return a+":"+(b<10?"0":"")+b; }
+function isDay(d){ return d.getFullYear()===DAY[0]&&d.getMonth()===DAY[1]&&d.getDate()===DAY[2]; }
+function nowInfo(){
+  var d=new Date(); if(!isDay(d)) return {state: (d < new Date(DAY[0],DAY[1],DAY[2]))?"before":"after"};
+  var m=d.getHours()*60+d.getMinutes()+d.getSeconds()/60, first=mins("11:00"), last=mins("15:50");
+  if(m<first) return {state:"early",left:first-m};
+  if(m>=last) return {state:"after"};
+  for(var i=0;i<SESS.length;i++){ var s=SESS[i];
+    for(var j=0;j<s.segs.length;j++){ var g=s.segs[j], a=mins(g.t), b=a+g.m; if(m>=a&&m<b) return {state:"on",sess:s,seg:g,left:b-m,frac:(m-a)/g.m}; }
+    var e=mins(s.end), nx=SESS[i+1]?mins(SESS[i+1].segs[0].t):e;
+    var lastSeg=s.segs[s.segs.length-1], le=mins(lastSeg.t)+lastSeg.m;
+    if(m>=le&&m<e) return {state:"wrap",sess:s,left:e-m};
+    if(m>=e&&m<nx) return {state:"break",sess:s,next:SESS[i+1],left:nx-m};
+  }
+  return {state:"after"};
+}
+function copyText(txt,said){
+  function ok(){ if(said){ said.textContent="복사했습니다."; setTimeout(function(){ said.textContent=""; },2600); } }
+  function fb(){ var ta=h("textarea",{style:"position:fixed;opacity:0;top:0;left:0"}); ta.value=txt; document.body.appendChild(ta); ta.select(); try{ document.execCommand("copy"); ok(); }catch(e){ if(said) said.textContent="복사가 되지 않으면 글을 길게 눌러 직접 복사해 주세요."; } document.body.removeChild(ta); }
+  try{ if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(ok,fb); } else fb(); }catch(e){ fb(); }
+}
+function field(label,el){ return h("label",{class:"field"},[h("span",{text:label}),el]); }
+function input(id,type,ph,onin){ var e=h("input",{type:type||"text",id:id,placeholder:ph||"",autocomplete:"off"}); e.value=get(id,""); e.addEventListener("input",function(){ set(id,e.value); if(onin) onin(); }); return e; }
+function area(id,ph,onin){ var e=h("textarea",{id:id,placeholder:ph||""}); e.value=get(id,""); e.addEventListener("input",function(){ set(id,e.value); if(onin) onin(); }); return e; }
+function det(title,tag,body,id){ var d=h("details",{class:"card",id:id||null},[h("summary",{},[title, tag?h("span",{class:"tag",text:tag}):null]),h("div",{class:"body"},body)]); if(id&&get("open-"+id,false)) d.open=true; if(id) d.addEventListener("toggle",function(){ set("open-"+id,d.open); }); return d; }
+function table(head,rows,cls){ return h("div",{class:"tbl"},[h("table",{class:cls||""},[h("thead",{},[h("tr",{},head.map(function(x){return h("th",{text:x});}))]),h("tbody",{},rows.map(function(r){return h("tr",{},r.map(function(c){ return (c&&c.nodeType)?h("td",{},[c]):h("td",{html:c}); }));}))])]); }
+
+/* ---------- 타이머 ---------- */
+var T={end:0,left:0,label:"",run:false,iv:null};
+var $timer=document.getElementById("timer"), $tm=document.getElementById("tm"), $tl=document.getElementById("tl"), $tp=document.getElementById("tp");
+function fmt(s){ s=Math.max(0,Math.ceil(s)); var a=Math.floor(s/60), b=s%60; return (a<10?"0":"")+a+":"+(b<10?"0":"")+b; }
+function tick(){ var s=T.run?(T.end-Date.now())/1000:T.left; $tm.textContent=fmt(s); if(T.run&&s<=0){ T.run=false; T.left=0; $timer.classList.add("done"); $tl.textContent=T.label+" · 시간이 되었습니다"; $tp.hidden=true; clearInterval(T.iv); } }
+function startTimer(m,label){ clearInterval(T.iv); T.label=label; T.end=Date.now()+m*60000; T.run=true; $timer.hidden=false; $timer.classList.remove("done"); $tl.textContent=label+" · "+m+"분"; $tp.hidden=false; $tp.textContent="잠시 멈춤"; tick(); T.iv=setInterval(tick,500); }
+$tp.addEventListener("click",function(){ if(T.run){ T.left=(T.end-Date.now())/1000; T.run=false; $tp.textContent="이어서"; } else { T.end=Date.now()+T.left*1000; T.run=true; $tp.textContent="잠시 멈춤"; } tick(); });
+document.getElementById("tx").addEventListener("click",function(){ clearInterval(T.iv); T.run=false; $timer.hidden=true; });
+
+/* ---------- 화면: 오늘 ---------- */
+function prog(s){ var tot=0,done=0; s.segs.forEach(function(g){ (g.steps||[]).forEach(function(_,i){ tot++; if(get("c-"+g.id+"-"+i,false)) done++; }); }); return [done,tot]; }
+function fillProg(el,s){ var p=prog(s); el.innerHTML=""; el.appendChild(h("span",{text:"활동 단계 "+p[0]+" / "+p[1]})); el.appendChild(h("div",{class:"bar"},[h("i",{style:"width:"+(p[1]?Math.round(p[0]/p[1]*100):0)+"%"})])); }
+function stepList(act){
+  return h("ul",{class:"checks"},act.steps.map(function(st,i){ var id="c-"+act.id+"-"+i; var cb=h("input",{type:"checkbox",id:id}); cb.checked=!!get(id,false); cb.addEventListener("change",function(){ set(id,cb.checked); paintTabs(); var pe=document.getElementById("prog"); if(pe&&pe._s) fillProg(pe,pe._s); });
+    return h("li",{},[h("label",{for:id},[cb,h("span",{},[h("span",{class:"n",text:String(i+1)}),st])])]); }));
+}
+function strip(n){ var cur=n.sess?SESS.indexOf(n.sess):(n.state==="after"?4:-1), brk=(n.state==="break"||n.state==="wrap");
+  return h("div",{class:"strip","aria-hidden":"true"},SESS.map(function(s,i){ var cls=(i<cur||(i===cur&&n.state==="break"))?"d":(i===cur&&!brk||i===cur&&n.state==="wrap")?"c":""; return h("span",{class:cls,text:s.n+"차시 "+s.time.split("~")[0]}); })); }
+function nowCard(){
+  var n=nowInfo(), c=h("section",{class:"card now"});
+  if(n.state==="on"){
+    c.appendChild(h("div",{class:"now-head"},[h("span",{class:"pill live",text:"지금"}),h("span",{class:"pill "+KIND[n.seg.k][1],text:KIND[n.seg.k][0]}),h("span",{class:"sub",text:n.sess.n+"차시 · "+n.seg.t+"부터 "+n.seg.m+"분"}),h("span",{class:"left",text:"약 "+Math.max(1,Math.ceil(n.left))+"분 남음"})]));
+    c.appendChild(h("h2",{text:n.seg.title}));
+    c.appendChild(h("div",{class:"bar"},[h("i",{style:"width:"+Math.round(n.frac*100)+"%"})]));
+    if(n.seg.steps){ c.appendChild(stepList(n.seg)); c.appendChild(h("dl",{class:"kv"},[h("dt",{text:"여는 것"}),h("dd",{text:n.seg.open}),h("dt",{text:"마치면"}),h("dd",{text:n.seg.out})])); }
+    else c.appendChild(h("p",{class:"sub",text:n.seg.desc}));
+    c.appendChild(strip(n));
+    c.appendChild(h("div",{class:"row"},[h("button",{class:"btn primary",type:"button",text:n.sess.n+"차시 화면으로",onclick:function(){ go(n.sess.id); }}),h("a",{class:"btn",href:PADLET,target:"_blank",rel:"noopener",text:"패들렛 열기"})]));
+  } else {
+    var head, body, btn=null;
+    if(n.state==="break"||n.state==="wrap"){ head=n.state==="wrap"?n.sess.n+"차시를 마무리하는 시간입니다":n.sess.after; body=(n.next?(n.next.n+"차시 「"+n.next.title+"」는 "+n.next.segs[0].t+"에 시작합니다. "+n.next.ws.split(" · ")[0]+"을(를) 열어 두시면 좋습니다."):"아직 올리지 못한 워크시트가 있으면 지금 올려 주세요."); if(n.next) btn=n.next.id; }
+    else if(n.state==="early"){ head="11:00에 시작합니다"; body="아래 세 가지를 먼저 준비해 주세요."; }
+    else if(n.state==="after"){ head="모듈 4를 마쳤습니다"; body="오늘 다시 짠 지도안과 워크시트 네 장이 남았습니다. 교실에서 해 보신 뒤 동료 선생님들과 나누어 주세요."; }
+    else { head="11월 22일(일) 11:00에 시작합니다"; body="연수 당일에는 이 자리에 지금 할 일과 남은 시간이 나타납니다. 미리 둘러보셔도 좋습니다."; }
+    c.appendChild(h("div",{class:"now-head"},[h("span",{class:"pill",text:n.state==="before"?"미리 보기":"안내"})]));
+    c.appendChild(h("h2",{text:head})); c.appendChild(h("p",{class:"sub",text:body}));
+    c.appendChild(strip(n));
+    c.appendChild(h("div",{class:"row"},[btn?h("button",{class:"btn primary",type:"button",text:"다음 차시 화면으로",onclick:function(){ go(btn); }}):null,h("a",{class:"btn"+(btn?"":" primary"),href:PADLET,target:"_blank",rel:"noopener",text:"패들렛 열기"})]));
+  }
+  return c;
+}
+function dayCard(){
+  var n=nowInfo(), d=new Date(), m=isDay(d)?d.getHours()*60+d.getMinutes():-1;
+  var wrap=h("div",{class:"day"});
+  SESS.forEach(function(s){
+    var box=h("div",{class:"sess"});
+    box.appendChild(h("div",{class:"sess-h"},[h("button",{type:"button",text:s.n+"차시 · "+s.title,onclick:function(){ go(s.id); }}),h("span",{text:s.time+" · "+s.ws.split(" · ")[0]})]));
+    s.segs.forEach(function(g){ var a=mins(g.t), b=a+g.m, cls="seg"+(m>=b?" past":"")+((n.state==="on"&&n.seg===g)?" cur":"");
+      box.appendChild(h("div",{class:cls},[h("time",{text:g.t}),h("div",{},[h("b",{text:g.title}),h("span",{class:"pill "+KIND[g.k][1],text:KIND[g.k][0]+" "+g.m+"분"})])])); });
+    box.appendChild(h("div",{class:"gapline",text:s.end+"  "+s.after}));
+    wrap.appendChild(box);
+  });
+  return h("section",{class:"card"},[h("h2",{text:"오늘의 순서"}),h("p",{class:"sub",text:"차시마다 설명을 먼저 듣고, 나머지 시간은 끊지 않고 작업합니다."}),wrap]);
+}
+function viewToday(){
+  var prep=[["AIEDAP(aiedap.or.kr)에 로그인해 자신의 수업지도안과 실천보고서를 열어 둡니다.",""],["패들렛 ‘강의 자료’에서 워크시트 1~4 양식과 참고 자료를 내려받습니다.",""],["워크시트는 파일에 작성하고, 차시를 마칠 때마다 패들렛의 해당 칸에 올립니다.",""]];
+  var ul=h("ul",{class:"checks"},prep.map(function(p,i){ var id="prep-"+i, cb=h("input",{type:"checkbox",id:id}); cb.checked=!!get(id,false); cb.addEventListener("change",function(){ set(id,cb.checked); }); return h("li",{},[h("label",{for:id},[cb,h("span",{},[h("span",{class:"n",text:String(i+1)}),p[0]])])]); }));
+  return [
+    h("section",{class:"hero"},[h("div",{class:"eyebrow",text:"AIEDAP 마스터교원 신규연수 · 경북권역 · 영어"}),h("h1",{html:"내 수업지도안을 <del>조금 손본다</del> <ins>다시 짠다</ins>"}),h("p",{text:"모듈 4 「나의 AI 융합수업 re-design하기」의 네 차시를 따라가는 길잡이입니다. 지금 할 일, 여는 워크시트, 올리는 곳을 한 화면에서 확인하실 수 있습니다."})]),
+    nowCard(),
+    h("section",{class:"card"},[h("h2",{text:"시작 전 준비"}),ul,h("div",{class:"row"},[h("a",{class:"btn primary",href:PADLET,target:"_blank",rel:"noopener",text:"모듈 4 · 영어 패들렛 열기"}),h("a",{class:"btn",href:"https://aiedap.or.kr",target:"_blank",rel:"noopener",text:"AIEDAP 사이트"})])]),
+    dayCard(),
+    h("section",{class:"card"},[h("h2",{text:"마치고 나면 남는 것"}),h("div",{class:"grid2"},[h("div",{class:"mini"},[h("b",{text:"re-design 수업지도안 한 부"}),h("span",{text:"AIEDAP ‘AI 융합수업 설계해보기’에서 작성합니다."})]),h("div",{class:"mini"},[h("b",{text:"워크시트 네 장"}),h("span",{text:"평가 점검표 · 성찰 보고서 · 재설계 워크시트 · 공유 및 환류 기록"})]),h("div",{class:"mini"},[h("b",{text:"필수 제출 두 절차"}),h("span",{text:"공유마당에 공유하기, 수료 제출물 제출. 4차시에 함께 진행합니다."})])])])
+  ];
+}
+
+/* ---------- 화면: 차시 ---------- */
+function actCard(s,g){
+  var n=nowInfo(), a=mins(g.t), end=hm(a+g.m);
+  if(!g.steps) return h("div",{class:"talk"},[h("time",{text:g.t+"~"+end}),h("span",{class:"pill k-talk",text:KIND[g.k][0]+" "+g.m+"분"}),h("b",{text:g.title}),h("span",{text:g.desc})]);
+  var c=h("section",{class:"card act"+((n.state==="on"&&n.seg===g)?" is-now":""),id:g.id});
+  c.appendChild(h("div",{class:"act-meta"},[(n.state==="on"&&n.seg===g)?h("span",{class:"pill live",text:"지금"}):null,h("time",{text:g.t+"~"+end}),h("span",{class:"pill "+KIND[g.k][1],text:KIND[g.k][0]+" · "+g.m+"분"})]));
+  c.appendChild(h("h2",{text:g.title}));
+  c.appendChild(stepList(g));
+  if(g.note) c.appendChild(h("p",{class:"note",text:g.note}));
+  c.appendChild(h("dl",{class:"kv"},[h("dt",{text:"여는 것"}),h("dd",{text:g.open}),h("dt",{text:"마치면"}),h("dd",{text:g.out})]));
+  var jumps=(g.jump||[]).map(function(j){ return h("button",{class:"btn small",type:"button",text:j[0]+" ↓",onclick:function(){ var d=document.getElementById(j[1]); if(d){ d.open=true; set("open-"+j[1],true); d.scrollIntoView({block:"start"}); window.scrollBy(0,-72); } }}); });
+  c.appendChild(h("div",{class:"row"},[h("button",{class:"btn small quiet",type:"button",text:g.m+"분 타이머",onclick:function(){ startTimer(g.m,g.title); }})].concat(jumps).concat([(/패들렛/.test(g.open+g.out))?h("a",{class:"btn small",href:PADLET,target:"_blank",rel:"noopener",text:"패들렛 열기"}):null])));
+  return c;
+}
+function pickChips(key,label,onch){ var box=h("div",{class:"chips",role:"group","aria-label":label}); ["A","B"].forEach(function(x){ box.appendChild(h("button",{class:"chip",type:"button",text:"글 "+x,"aria-pressed":String(get(key,"")===x),onclick:function(){ set(key,x); Array.prototype.forEach.call(box.children,function(b){ b.setAttribute("aria-pressed",String(b.textContent==="글 "+x)); }); if(onch) onch(x); }})); }); return box; }
+function abCard(){
+  var es={}; var wrap=h("div",{class:"essays"},["A","B"].map(function(k){ es[k]=h("article",{class:"essay"+(get("ab-pick","")===k?" sel":""),lang:"en"},[h("div",{class:"tagAB",text:"글 "+k}),h("h3",{text:AB[k][0]}),h("p",{text:AB[k][1]})]); return es[k]; }));
+  return h("section",{class:"card",id:"ab"},[h("div",{class:"act-meta"},[h("time",{text:"11:02쯤"}),h("span",{class:"pill k-solo",text:"함께 읽기 · 2분"})]),h("h2",{text:"어느 쪽이 더 잘 쓴 글일까요?"}),h("p",{class:"sub",text:"같은 과제로 쓴 두 편의 학생 글입니다. 과제는 ‘우리 지역의 문화를 영어로 소개하기’입니다. 채점한다고 생각하고 읽어 주세요."}),wrap,
+    h("div",{class:"field"},[h("span",{text:"더 높은 점수를 줄 글"}),pickChips("ab-pick","더 높은 점수를 줄 글",function(x){ es.A.classList.toggle("sel",x==="A"); es.B.classList.toggle("sel",x==="B"); })]),
+    field("그렇게 판단한 이유 한 줄",input("ab-why","text","예: 표현이 구체적이어서")),
+    h("p",{class:"note",text:"여기에 적은 답은 4차시 ‘돌아보기’에서 다시 보여 드립니다."})]);
+}
+function lookBack(){
+  var out=h("div",{class:"out"}), said=h("div",{class:"said","aria-live":"polite"});
+  function txt(){ var a=get("ab-pick",""), aw=(get("ab-why","")+"").trim(), b=get("ab-now",""), bw=(get("ab-now-why","")+"").trim();
+    return "1차시의 답: "+(a?"글 "+a:"")+(aw?" — "+aw:"")+"\n지금의 답: "+(b?"글 "+b:"")+(bw?" — "+bw:""); }
+  function paint(){ out.textContent=txt(); }
+  var a=get("ab-pick",""), aw=(get("ab-why","")+"").trim();
+  var then=h("div",{class:"mini"},[h("b",{text:"1차시에 고른 답"}),h("span",{text:a?("글 "+a+(aw?" — "+aw:"")):"1차시에 이 화면에 답을 적지 않으셨습니다. 기억나는 대로 워크시트에 적어 주세요."})]);
+  var c=h("section",{class:"card",id:"look"},[h("h2",{text:"그때의 답과 지금의 답"}),h("p",{class:"sub",text:"1차시 첫 활동에서 읽은 경주 소개 글 두 편을 다시 떠올려 주세요."}),then,
+    h("div",{class:"field"},[h("span",{text:"지금 다시 고른다면"}),pickChips("ab-now","지금의 답",paint)]),
+    field("그렇게 판단한 이유 · 생각이 바뀌었다면 무엇이 바꾸었는지",area("ab-now-why","예: 최종 글만으로는 학생이 한 일을 알 수 없다는 것을 알게 되어, 과정 기록을 함께 보고 싶다.",paint)),
+    out,h("div",{class:"row"},[h("button",{class:"btn primary",type:"button",text:"두 답 복사",onclick:function(){ copyText(txt().replace(/\\n/g,"\n"),said); }})]),said,
+    h("p",{class:"note",text:"워크시트 4의 5번에 옮겨 적은 뒤, 워크시트 4를 패들렛에 올려 주세요."})]);
+  paint(); return c;
+}
+function toolCase(){
+  var out=h("div",{class:"out"}), said=h("div",{class:"said","aria-live":"polite"}), chips=h("div",{class:"chips",role:"group","aria-label":"맡은 사례"});
+  function txt(){ var g=(get("case-team","")+"").trim(), c=get("case-no",""); return (g?"["+g+"] ":"")+(c?"사례 "+c:"")+"\n평가할 것: "+(get("case-what","")+"").trim()+"\n증거를 모을 곳: "+(get("case-where","")+"").trim(); }
+  function paint(){ out.textContent=txt(); }
+  CASES.forEach(function(c){ chips.appendChild(h("button",{class:"chip",type:"button",text:c,"aria-pressed":String(get("case-no","")===c),onclick:function(){ set("case-no",c); Array.prototype.forEach.call(chips.children,function(b){ b.setAttribute("aria-pressed",String(b.textContent===c)); }); paint(); }})); });
+  var body=[h("p",{class:"sub",text:"모둠에서 정한 내용을 적으면 패들렛 댓글 한 편이 만들어집니다. 모둠에서 한 분이 올려 주세요."}),h("div",{class:"field"},[h("span",{text:"맡은 사례"}),chips]),field("모둠 (선택)",input("case-team","text","예: 3모둠",paint)),field("이 수업에서 학생의 무엇을 평가할까",area("case-what","",paint)),field("그 증거를 어디에서 모을 수 있을까",area("case-where","",paint)),out,h("div",{class:"row"},[h("button",{class:"btn primary",type:"button",text:"댓글 복사",onclick:function(){ copyText(txt(),said); }}),h("a",{class:"btn",href:PADLET,target:"_blank",rel:"noopener",text:"패들렛 ‘1차시 · 사례 비교’ 열기"})]),said];
+  paint(); return det("사례 비교 댓글 쓰기","도구",body,"t-case");
+}
+function toolTypes(){
+  var cur=get("type-cur",TYPES[2].n), chips=h("div",{class:"chips",role:"group","aria-label":"수업 유형"}), box=h("div",{class:"typ"});
+  function paint(){ chips.innerHTML=""; TYPES.forEach(function(t){ chips.appendChild(h("button",{class:"chip",type:"button",text:t.n,"aria-pressed":String(t.n===cur),onclick:function(){ cur=t.n; set("type-cur",cur); paint(); }})); });
+    var t=TYPES.filter(function(x){return x.n===cur;})[0]||TYPES[0]; box.innerHTML="";
+    box.appendChild(h("dl",{},[h("dt",{text:"무엇을 하나"}),h("dd",{text:t.what}),h("dt",{text:"영어과 적용"}),h("dd",{text:t.fit}),h("dt",{text:"수업 예시"}),h("dd",{},[h("b",{text:t.ex})]),h("dt",{text:"AI가 하는 일"}),h("dd",{text:t.ai}),h("dt",{text:"학생이 하는 일"}),h("dd",{text:t.st})]));
+    box.appendChild(h("div",{class:"lab",text:"학생 활동 예시"})); box.appendChild(h("ul",{},t.acts.map(function(a){ return h("li",{text:a}); }))); }
+  paint();
+  return det("네 가지 수업 유형과 영어 수업 예시",null,[h("p",{class:"sub",text:"유형을 누르면 그 유형의 영어 수업 예시가 나옵니다. 워크시트 3의 첫 칸에 고른 유형과 이유를 적습니다. 2차시의 판별 결과를 참고해 주세요."}),chips,box,h("p",{class:"note",text:"어느 유형을 선택하더라도 ‘학생이 하는 일’이 반드시 필요합니다."})],"t-types");
+}
+function demoRef(){
+  return det("시연 예시 — AI 요약에서 빠지거나 과장된 곳 찾기",null,[h("p",{class:"sub",text:"워크시트 3의 ② 증거에 적는 ‘고친 자리와 고친 이유’ 기록이 어떤 모양이 되는지 보여 주는 예입니다. 글과 요약, 학생의 기록은 모두 설명을 위해 만든 것입니다."}),
+    h("div",{class:"lab",text:"읽기 지문 · Fast Translation, Careful Choices"}),h("p",{class:"quote",lang:"en",text:"AI translation can help people understand unfamiliar languages quickly. For a simple travel question, speed and clear words may be enough. But communication also involves choices about context. A literal translation of a joke may confuse a listener, and a polite phrase may sound distant in another language. Human users therefore need to check what a message will mean to the people who receive it. They must also decide whether to keep, explain, or change an expression. By comparing alternatives, learners can notice these choices and explain their reasons. Responsibility for the final message still belongs to the person who uses it."}),
+    h("div",{class:"lab",text:"AI 요약 (검토할 대상)"}),h("p",{class:"quote",lang:"en",text:"AI translation always helps people communicate accurately. It translates travel questions and jokes quickly, so users can choose its answers without checking the context."}),
+    h("div",{class:"lab",text:"학생이 남긴 기록"}),
+    table(["고친 자리","원문 근거","고친 이유 (학생이 적은 내용)"],[
+      ["<span class='rev'><del>always helps … accurately</del> → <ins>can help people communicate quickly</ins></span>","For a simple travel question, speed and clear words may be enough.","원문은 간단한 상황에 한해 말했는데 요약은 ‘항상 정확하다’로 넓혔다"],
+      ["<span class='rev'><del>without checking the context</del> → <ins>but users still need to check the context</ins></span>","A literal translation of a joke may confuse a listener.","농담 번역의 예는 맥락을 확인해야 한다는 뜻인데 요약은 반대로 옮겼다"],
+      ["<span class='rev'><ins>People remain responsible for the final message.</ins> 를 새로 넣음</span>","Responsibility for the final message still belongs to the person who uses it.","글의 결론인 사용자의 책임이 요약에 빠져 있었다"],
+      ["“quickly”는 그대로 둠","AI translation can help people understand unfamiliar languages quickly.","빠르게 돕는다는 장점은 원문과 같아서 유지했다"]]),
+    h("div",{class:"lab",text:"고친 요약"}),h("p",{class:"quote",lang:"en",text:"AI translation can help people communicate quickly, but users still need to check the context. Comparing alternatives can help learners explain their choices. People remain responsible for the final message."}),
+    h("p",{class:"note",text:"교사가 물을 질문: 어느 원문 문장이 그 수정의 근거인가요? · 유지한 표현 하나와 그 이유를 말해 주세요."})],"r-demo");
+}
+function memoCard(s){ return h("section",{class:"card"},[h("h2",{text:s.n+"차시 메모"}),area("memo-"+s.id,"떠오른 생각이나 동료에게 들은 이야기를 적어 두세요. 이 기기에만 저장됩니다.")]); }
+
+function toolStd(){
+  var cats=[]; STD.forEach(function(r){ if(cats.indexOf(r[0])<0) cats.push(r[0]); });
+  var cur=get("std-cat",cats[0]), list=h("div",{class:"std"}), chips=h("div",{class:"chips",role:"group","aria-label":"AI 관련 활동"}), said=h("div",{class:"said","aria-live":"polite"});
+  function paint(){ chips.innerHTML=""; cats.forEach(function(c){ chips.appendChild(h("button",{class:"chip",type:"button","aria-pressed":String(c===cur),text:c,onclick:function(){ cur=c; set("std-cat",c); paint(); }})); });
+    list.innerHTML=""; STD.filter(function(r){return r[0]===cur;}).forEach(function(r){ list.appendChild(h("div",{},[h("div",{},[h("div",{class:"code",style:"white-space:normal",text:r[1]}),h("div",{text:r[2]})]),h("button",{class:"btn small",type:"button",text:"복사",onclick:function(){ copyText(r[1]+" "+r[2],said); }})])); }); }
+  paint();
+  return det("성취기준 찾기","도구",[h("p",{class:"sub",text:"학생이 실제로 한 AI 관련 활동에 가까운 것을 고르면, 그 활동을 담을 수 있는 영어과 성취기준의 예가 나옵니다. 성취수준은 교육과정 원문에서 함께 확인해 주세요."}),chips,list,said,h("p",{class:"note",text:"AI는 ‘매체’의 한 종류로 볼 수 있습니다. 과목이 다른 선생님은 참고 자료의 안내에 따라 해당 과목의 성취기준에서 찾아 주세요."})],"t-std");
+}
+function refS1(){
+  return [
+    det("학생 B가 남긴 기록",null,[table(["고친 자리","고친 이유 (학생이 적은 내용)"],[
+      ["<span class='rev'><del>many ancient tombs</del> → <ins>royal tombs that tell the stories of ancient kings</ins></span>","그냥 무덤이 아니라 왕릉이라는 것을 전하고 싶었다"],
+      ["<span class='rev'><del>It is very old and beautiful.</del> → <ins>자연과 불교 미술의 조화를 말하는 문장</ins></span>","왜 아름다운지가 빠져 있었다"],
+      ["<span class='rev'><ins>자전거를 빌려 다니라는 문장을 새로 넣음</ins></span>","AI 초안은 어느 도시에나 맞는 안내 같아서, 경주다운 것을 넣고 싶었다"],
+      ["“museum without walls”는 그대로 둠","찾아보니 실제로 쓰는 표현이어서 유지했다"]]),h("p",{class:"note",text:"최종 글에는 보이지 않던 학생 B의 판단이 이 기록에 남아 있습니다. 학생과 기록은 설명을 위해 구성한 가상 자료입니다."})],"r-b"),
+    det("평가에 포함되는 것, 포함되지 않는 것",null,[h("div",{class:"grid2"},[["① 언어적 판단","AI가 제안한 표현 중 무엇을 골랐고 무엇을 버렸는가, 그 이유는 무엇인가"],["② 맥락 판단","AI가 만든 영어가 듣는 사람과 상황, 문화 맥락에 맞는가"],["③ 정보 검증","AI가 준 내용을 원문이나 출처와 맞춰 보았는가"],["④ 학생의 몫","최종 글에 학생 자신이 하려던 말이 남아 있는가"]].map(function(x){return h("div",{class:"mini"},[h("b",{text:x[0]}),h("span",{text:x[1]})]);})),h("div",{class:"grid2"},[["도구를 다루는 능력","영어과 성취기준이 겨냥하는 수행이 아니다"],["프롬프트 작성 기술","수업에서 가르치지 않은 것을 평가하게 된다"],["AI 결과물의 완성도","학생이 아니라 도구의 성능을 평가하게 된다"]].map(function(x){return h("div",{class:"mini no"},[h("b",{text:x[0]}),h("span",{text:x[1]})]);}))],"r-in"),
+    det("세 가지 사례",null,[table(["","① 챗봇 역할극","② 초안 고쳐 쓰기","③ 기사 분석"],[["<b>AI의 역할</b>","학생과 대화하는 상대","검토해야 할 초안을 내놓는 쪽","많은 양을 다루는 분석 도구"],["<b>영어 활동</b>","교환학생에게 학교 축제를 안내한다","지역 문화를 소개하는 글을 다듬는다","여러 나라 기후 재난 기사를 비교한다"]]),h("p",{class:"note",text:"모둠에서 맡은 사례에 대해 ‘학생의 무엇을 평가할지’와 ‘그 증거를 어디에서 모을지’를 패들렛 댓글로 적습니다."})],"r-case"),
+    toolCase(),
+    toolStd()
+  ];
+}
+function toolChk(){
+  var v=get("chk",[]), m=h("div",{class:"meter"}), ul=h("ul",{class:"checks"});
+  function cnt(a){ return a.filter(function(i){return v.indexOf(i)>=0;}).length; }
+  function paint(){ var f=cnt(FUSE), u=cnt(USE); m.innerHTML="";
+    m.appendChild(h("div",{},[h("span",{text:"AI 융합 쪽"}),h("div",{class:"bar"},[h("i",{style:"width:"+(f/8*100)+"%"})]),h("span",{class:"v",text:f+" / 8"})]));
+    m.appendChild(h("div",{class:"b2"},[h("span",{text:"AI 활용 쪽"}),h("div",{class:"bar"},[h("i",{style:"width:"+(u/4*100)+"%"})]),h("span",{class:"v",text:u+" / 4"})])); }
+  CHK.forEach(function(q,i){ var n=i+1,id="chk-"+n,cb=h("input",{type:"checkbox",id:id}); cb.checked=v.indexOf(n)>=0; cb.addEventListener("change",function(){ var k=v.indexOf(n); if(cb.checked&&k<0) v.push(n); if(!cb.checked&&k>=0) v.splice(k,1); set("chk",v); paint(); }); ul.appendChild(h("li",{},[h("label",{for:id},[cb,h("span",{},[h("span",{class:"n",text:String(n)}),q])])])); });
+  paint();
+  return det("AI 융합 vs AI 활용 체크리스트","도구",[h("p",{class:"sub",text:"내 수업에 해당하는 문항에 표시하면 어느 쪽 문항이 많은지 세어 줍니다. 판단과 근거가 된 수업 장면은 워크시트 2의 3번에 적어 주세요."}),ul,m,h("div",{class:"grid2"},[h("div",{class:"mini"},[h("b",{text:"1 · 3 · 5 · 6 · 7 · 9 · 11 · 12에 표시가 많다면"}),h("span",{text:"학생이 AI를 활용해 교과 내용에 새로운 방식으로 접근하고 있습니다. 다음 걸음은 그 판단을 평가에서 어떻게 확인할지 정하는 것입니다."})]),h("div",{class:"mini"},[h("b",{text:"2 · 4 · 8 · 10에 표시가 많다면"}),h("span",{text:"AI가 교수·학습을 돕고 있으며 학습의 효율을 높이는 데 초점이 있습니다. 다음 걸음은 학생이 AI의 결과를 판단하는 자리를 어디에 넣을지 찾는 것입니다."})])]),h("p",{class:"note",text:"어느 쪽이든 잘못된 수업이 아닙니다. 수업 목표와 일치하는지 확인해 주세요."})],"t-chk");
+}
+function refS2(){
+  return [
+    det("여섯 렌즈와 성찰의 여섯 항목",null,[table(["모듈 1의 렌즈","살펴볼 내용","성찰 항목 (워크시트 2 · 2번)"],[["교육적 관점","AI 활용이 학습목표 달성에 어떻게 기여했는가","② 교과 목표와의 정합성"],["학습자 관점","학생이 스스로 생각하고 선택할 기회가 있었는가","③ 학생의 반응과 성취 · ⑤ 교수 전략과 발문"],["기술적 관점","기술이 수업 목적과 학생 수준에 맞았는가","① AI 활용의 적절성 · ⑥ 난이도"],["평가 관점","사고 과정과 AI 활용 과정을 확인했는가","1차시 워크시트 1에서 점검"],["윤리적 관점","AI의 한계와 책임(오류 · 편향 · 저작권 · 개인정보)을 다루었는가","④ AI 윤리 요소"],["실행 관점","주어진 시간과 기기 여건에서 다시 실행할 수 있는가","2번 표 아래에 덧붙임"]]),h("p",{class:"note",text:"렌즈와 항목이 정확히 일치하지는 않으므로, 내용이 가장 가까운 항목에 적어 주세요."})],"r-lens"),
+    det("여섯 항목의 영어과 질문",null,[h("div",{class:"grid2"},[["① AI 활용의 적절성","그 도구가 듣기·말하기·읽기·쓰기 중 어디에 쓸모가 있었는가"],["② 교과 목표와의 정합성","AI가 의사소통 역량을 길렀는가, 과제만 빨리 끝내 주었는가"],["③ 학생의 반응과 성취","학생이 자기 말로 영어를 만들어 낸 순간이 있었는가"],["④ AI 윤리 요소","AI가 옮긴 영어의 문화적 편향을 짚었는가. 학생 글의 주인은 누구인가"],["⑤ 교수 전략과 발문","AI의 결과를 다시 보게 만드는 발문이 있었는가"],["⑥ 난이도","영어 숙달도에 따라 AI 지원의 정도를 달리했는가"]].map(function(x){return h("div",{class:"mini"},[h("b",{text:x[0]}),h("span",{text:x[1]})]);})),h("p",{class:"note",text:"항목마다 그렇게 판단한 근거가 된 수업 장면을 함께 적어 주세요."})],"r-six"),
+    toolChk()
+  ];
+}
+function toolTitle(){
+  var out=h("div",{class:"out"}), said=h("div",{class:"said","aria-live":"polite"});
+  function txt(){ var n=(get("my-no","")+"").trim(), s=(get("one-line","")+"").trim(); return (n?n+" · ":"")+s; }
+  function paint(){ var t=txt(); out.textContent=t||"예: 7 · AI 요약을 받아 읽던 수업을, 요약의 빈 곳을 찾아 보충하는 수업으로"; }
+  var a=input("my-no","number","예: 7",paint); a.min=1; a.inputMode="numeric";
+  var b=input("one-line","text","재설계 전과 후가 무엇이 달라졌는지 한 문장",paint); paint();
+  return det("패들렛 게시물 제목 만들기","도구",[h("p",{class:"sub",text:"워크시트 3을 올릴 때 게시물 제목에 내 번호와 재설계 전후 한 문장을 적습니다. 4차시에 이 번호로 서로의 워크시트를 찾습니다."}),h("div",{class:"fgrid"},[field("내 번호 (3차시 끝에 센 번호)",a)]),field("재설계 전후 한 문장 (워크시트 3 · 4번)",b),out,h("div",{class:"row"},[h("button",{class:"btn primary",type:"button",text:"제목 복사",onclick:function(){ copyText(txt(),said); }}),h("a",{class:"btn",href:PADLET,target:"_blank",rel:"noopener",text:"패들렛 열기"})]),said],"t-title");
+}
+function refS3(){
+  return [
+    det("Re-design이란",null,[table(["","이렇게 하면 일부만 바뀝니다","다시 짜는 일"],[["<b>활동</b>","<span class='rev'><del>활동 두어 개를 다른 것으로 바꾼다</del></span>","목표와 증거를 먼저 정하고 활동을 다시 배치한다"],["<b>도구</b>","<span class='rev'><del>AI 도구를 최신 것으로 갈아 끼운다</del></span>","AI가 없으면 성립하지 않는 자리에 AI를 놓는다"],["<b>평가</b>","<span class='rev'><del>목표와 활동만 고치고 평가는 그대로 둔다</del></span>","바뀐 목표에 맞게 평가 계획도 함께 고친다"]])],"r-re"),
+    det("재설계 워크시트 일곱 칸과 강사 시연",null,[table(["칸","점검 질문","강사 수업으로 채운 예 (공통영어2 · 읽기)"],SEVEN.map(function(r){return ["<b>"+r[0]+"</b>",r[1],r[2]];})),h("p",{class:"note",text:"처음 구상은 ‘AI 요약을 읽고 논증의 뼈대 채우기’였습니다. ③에서 AI가 없어도 된다는 답이 나와 AI의 역할부터 다시 잡았습니다. 채우지 못한 칸은 4차시 동료 검토에서 의견을 구합니다."})],"r-seven"),
+    det("영어과 문제해결 절차, AI와 학생의 몫",null,[table(["단계","AI가 하는 일","학생이 하는 일"],[["의사소통 과제 인식","실제 상황 자료를 보여 준다","목적과 듣는 사람을 정한다"],["맥락 이해","배경과 문화 정보를 정리한다","그 맥락이 맞는지 판단한다"],["언어 자료 분석","표현의 쓰임과 예문을 보여 준다","왜 그 표현을 고르는지 설명한다"],["표현 구상","초안과 다른 표현을 제안한다","최종 표현을 정하고 고친다"],["의사 전달 점검","발음과 읽기 쉬움을 점검한다","전달이 되었는지 스스로 평가한다"]]),h("p",{class:"note",text:"학생 쪽이 비어 있는 단계가 있다면 그 단계를 재설계해 주세요. (워크시트 3 · 2번)"})],"r-proc"),
+    toolTypes(),
+    demoRef(),
+    toolTitle()
+  ];
+}
+function toolPick(){
+  var out=h("div",{class:"big"}), sub=h("p",{class:"sub"});
+  function paint(){ var n=parseInt(get("my-no",""),10), t=parseInt(get("total","22"),10)||22; if(!n||n<1||n>t){ out.textContent="내 번호를 넣어 주세요"; sub.textContent=""; return; } var a=n%t+1, b=(n+1)%t+1; out.innerHTML="첫 번째 <b>"+a+"번</b> · 두 번째 <b>"+b+"번</b>"; sub.textContent="패들렛 ‘워크시트 3’ 칸에서 제목이 "+a+", "+b+"(으)로 시작하는 게시물을 엽니다. 해당 번호의 게시물이 없으면 그다음 번호를 봅니다."; }
+  var a=input("my-no","number","예: 7",paint); a.min=1; a.inputMode="numeric";
+  var b=input("total","number","22",paint); if(!b.value) b.value="22"; b.min=2; b.inputMode="numeric"; paint();
+  return det("검토할 두 편","도구",[h("p",{class:"sub",text:"한 사람이 두 편을 검토합니다. 내 번호 다음 두 편이고, 끝 번호 다음은 1번으로 이어집니다."}),h("div",{class:"fgrid"},[field("내 번호",a),field("전체 인원",b)]),out,sub,h("div",{class:"row"},[h("a",{class:"btn primary",href:PADLET,target:"_blank",rel:"noopener",text:"패들렛 ‘워크시트 3’ 열기"})])],"t-pick");
+}
+function toolFb(){
+  var cur=get("fb-cur",1), box=h("div",{style:"display:flex;flex-direction:column;gap:14px;min-width:0"}), tabs=h("div",{class:"chips",role:"group","aria-label":"검토 순서"});
+  function k(x){ return "fb"+cur+"-"+x; }
+  function text(){ var who=(get("fb-who","")+"").trim(), g=function(x){ return (get(k(x),"")+"").trim(); };
+    var marks=CRIT.map(function(c,i){ var v=get(k("c"+i),""); return c[0].charAt(0)+(v||"–"); }).join(" ");
+    var feas=get(k("feas"),""), cond=g("cond");
+    var L=[]; if(who) L.push("["+who+"]");
+    L.push("좋았던 점: "+g("good")); L.push("준거: "+marks); L.push("이렇게 하면 "+g("sug"));
+    L.push("내 교실에서 이대로: "+(feas||"")+((feas&&feas!=="예"&&cond)?" — "+cond:"")); return L.join("\n"); }
+  function paint(){
+    tabs.innerHTML=""; [1,2].forEach(function(i){ tabs.appendChild(h("button",{class:"chip",type:"button","aria-pressed":String(i===cur),text:(i===1?"첫 번째":"두 번째")+" 검토",onclick:function(){ cur=i; set("fb-cur",i); paint(); }})); });
+    box.innerHTML=""; var out=h("div",{class:"out"}), said=h("div",{class:"said","aria-live":"polite"});
+    function upd(){ out.textContent=text(); }
+    var crit=h("div",{class:"crit"}); CRIT.forEach(function(c,i){ var seg=h("div",{class:"seg3",role:"group","aria-label":c[0]}); ["○","△","×"].forEach(function(mk){ var b=h("button",{type:"button",text:mk,"aria-pressed":String(get(k("c"+i),"")===mk),onclick:function(){ var now=get(k("c"+i),"")===mk?"":mk; set(k("c"+i),now); Array.prototype.forEach.call(seg.children,function(x){ x.setAttribute("aria-pressed",String(x.textContent===now)); }); upd(); }}); seg.appendChild(b); }); crit.appendChild(h("div",{},[h("div",{},[h("b",{text:c[0]}),h("small",{text:c[1]})]),seg])); });
+    var feas=h("div",{class:"chips",role:"group","aria-label":"내 교실에서 이대로 할 수 있는가"}); ["예","조건부","아니오"].forEach(function(f){ feas.appendChild(h("button",{class:"chip",type:"button",text:f,"aria-pressed":String(get(k("feas"),"")===f),onclick:function(){ set(k("feas"),f); Array.prototype.forEach.call(feas.children,function(x){ x.setAttribute("aria-pressed",String(x.textContent===f)); }); upd(); }})); });
+    box.appendChild(field("좋았던 점 (먼저)",area(k("good"),"예: 고친 이유를 적는 칸이 활동지에 들어 있어 학생의 판단이 남습니다.",upd)));
+    box.appendChild(h("div",{class:"field"},[h("span",{text:"준거별 확인"}),crit]));
+    box.appendChild(field("이렇게 하면 ~",area(k("sug"),"예: 요약을 받기 전에 학생이 먼저 뼈대를 채우게 하면 비교할 기준이 생길 것 같습니다.",upd)));
+    box.appendChild(h("div",{class:"field"},[h("span",{text:"내 교실에서 이대로 할 수 있는가"}),feas]));
+    box.appendChild(field("조건부 · 아니오라면 그 조건",input(k("cond"),"text","예: 한 차시로는 빠듯해 두 차시로 나누면",upd)));
+    box.appendChild(h("div",{class:"field"},[h("span",{text:"댓글 미리 보기"}),out])); upd();
+    box.appendChild(h("div",{class:"row"},[h("button",{class:"btn primary",type:"button",text:"댓글 복사",onclick:function(){ copyText(text(),said); }}),h("a",{class:"btn",href:PADLET,target:"_blank",rel:"noopener",text:"패들렛 열기"})])); box.appendChild(said);
+    box.appendChild(h("p",{class:"note",text:"복사한 글을 검토한 게시물의 댓글 칸에 붙여 넣어 주세요. 무엇이 부족한지보다 어떻게 하면 실행이 쉬워지는지를 적으면 받는 분이 바로 적용해 볼 수 있습니다."}));
+  }
+  var who=input("fb-who","text","예: 7번 홍길동",function(){ var o=box.querySelector(".out"); if(o) o.textContent=text(); });
+  paint();
+  return det("피드백 댓글 쓰기","도구",[h("p",{class:"sub",text:"워크시트 4 피드백 카드의 순서대로 적으면 댓글 한 편이 만들어집니다. 패들렛에서는 이름이 보이지 않을 수 있어 첫 줄에 번호와 이름을 적습니다."}),field("내 번호와 이름",who),tabs,box],"t-fb");
+}
+function refS4(){
+  return [
+    toolPick(), toolFb(),
+    det("검토 준거 다섯 가지",null,[h("div",{class:"grid2"},CRIT.map(function(x){return h("div",{class:"mini"},[h("b",{text:x[0]}),h("span",{text:x[1]})]);})),h("p",{class:"note",text:"①~④는 1차시와 2차시에서 쓴 관점을 다시 쓰는 것이고, ⑤ 실행 가능성이 새로 더해졌습니다."})],"r-crit"),
+    det("피드백 문장 두 가지",null,[table(["","인상을 말하는 문장","실행을 돕는 문장"],[["<b>문장</b>","<span class='rev'><del>평가 요소가 부족합니다</del></span>","고친 이유를 적는 칸을 두면 증거가 남을 것 같습니다"],["<b>읽는 사람에게</b>","무엇을 어떻게 고쳐야 할지 알기 어렵다","고칠 자리와 방법이 함께 보인다"],["<b>받는 사람은</b>","방어하게 된다","바로 적용해 볼 수 있다"]])],"r-fb")
+  ];
+}
+function viewSess(s){
+  var pe=h("div",{class:"prog",id:"prog"}); pe._s=s; fillProg(pe,s);
+  var out=[h("section",{class:"s-head"},[h("div",{class:"eyebrow",text:s.n+"차시 · "+s.time+" · "+s.ws}),h("h1",{text:s.title}),h("p",{class:"q",text:s.q}),pe])];
+  s.segs.forEach(function(g,i){ out.push(actCard(s,g)); if(s.id==="s1"&&i===0) out.push(abCard()); if(g.id==="a44") out.push(lookBack()); });
+  out.push(h("h2",{class:"sec",text:"참고와 도구"}));
+  ({s1:refS1,s2:refS2,s3:refS3,s4:refS4})[s.id]().forEach(function(x){ out.push(x); });
+  out.push(memoCard(s));
+  var i=SESS.indexOf(s);
+  out.push(h("div",{class:"row"},[i>0?h("button",{class:"btn",type:"button",text:"← "+SESS[i-1].n+"차시",onclick:function(){ go(SESS[i-1].id); }}):h("button",{class:"btn",type:"button",text:"← 오늘",onclick:function(){ go("today"); }}),i<SESS.length-1?h("button",{class:"btn primary",type:"button",text:SESS[i+1].n+"차시 →",onclick:function(){ go(SESS[i+1].id); }}):null]));
+  return out;
+}
+
+function viewMemo(){
+  var said=h("div",{class:"said","aria-live":"polite"});
+  function all(){ var L=["모듈 4 · 영어 · 내 메모"]; var a=get("ab-pick",""); if(a) L.push("","[두 글 비교] 1차시: 글 "+a+" — "+(get("ab-why","")||"")+(get("ab-now","")?"\n지금: 글 "+get("ab-now","")+" — "+(get("ab-now-why","")||""):""));
+    SESS.forEach(function(s){ var m=(get("memo-"+s.id,"")+"").trim(); if(m) L.push("","["+s.n+"차시 · "+s.title+"]",m); }); return L.join("\n"); }
+  var out=[h("section",{class:"s-head"},[h("div",{class:"eyebrow",text:"이 기기에만 저장됩니다"}),h("h1",{text:"내 메모"}),h("p",{class:"sub",text:"차시마다 적은 메모를 한곳에서 보고 고칠 수 있습니다. 모듈 5의 활동계획서를 쓸 때 다시 열어 보셔도 좋습니다."})])];
+  SESS.forEach(function(s){ out.push(memoCard(s)); });
+  out.push(h("div",{class:"row"},[h("button",{class:"btn primary",type:"button",text:"메모 전체 복사",onclick:function(){ copyText(all(),said); }})])); out.push(said);
+  return out;
+}
+
+/* ---------- 탭과 이동 ---------- */
+var VIEWS=[["today","오늘"]].concat(SESS.map(function(s){return [s.id,s.n+"차시"];})).concat([["memo","메모"]]);
+var $tabs=document.getElementById("tabs"), $view=document.getElementById("view"), curView="today";
+function paintTabs(){ var n=nowInfo(); $tabs.innerHTML=""; VIEWS.forEach(function(v){ var b=h("button",{class:"tab",type:"button",text:v[1],onclick:function(){ go(v[0]); }}); if(v[0]===curView) b.setAttribute("aria-current","page"); if(n.state==="on"&&n.sess.id===v[0]) b.appendChild(h("span",{class:"dot",title:"지금 진행 중"})); else { var ss=SESS.filter(function(x){return x.id===v[0];})[0]; if(ss){ var pg=prog(ss); if(pg[1]&&pg[0]===pg[1]) b.appendChild(document.createTextNode(" ✓")); } } $tabs.appendChild(b); }); }
+function render(){ var s=SESS.filter(function(x){return x.id===curView;})[0]; $view.innerHTML=""; (s?viewSess(s):(curView==="memo"?viewMemo():viewToday())).forEach(function(e){ if(e) $view.appendChild(e); }); paintTabs(); }
+function go(id){ curView=id; try{ if(location.hash!=="#"+id) location.hash=id; }catch(e){} render(); window.scrollTo(0,0); }
+function fromHash(){ var x=(location.hash||"").replace("#",""); if(VIEWS.some(function(v){return v[0]===x;})){ if(x!==curView){ curView=x; render(); } } }
+window.addEventListener("hashchange",fromHash);
+(function(){ var x=(location.hash||"").replace("#",""); if(VIEWS.some(function(v){return v[0]===x;})) curView=x; })();
+render();
+/* 진행 중 표시는 30초마다 새로 그립니다. 입력 중인 칸이 있으면 건드리지 않습니다. */
+var lastKey=(function(){ var n=nowInfo(); return n.state+(n.seg?n.seg.t:"")+(n.sess?n.sess.id:""); })();
+setInterval(function(){ var n=nowInfo(), key=n.state+(n.seg?n.seg.t:"")+(n.sess?n.sess.id:""); var a=document.activeElement, typing=a&&(a.tagName==="TEXTAREA"||a.tagName==="INPUT");
+  if(curView==="today"&&!typing){ render(); } else if(key!==lastKey){ paintTabs(); if(!typing) render(); } lastKey=key; },30000);
+})();
+</script>
+
+</body>
+</html>

@@ -412,8 +412,11 @@ function h(tag,attrs,kids){ var e=document.createElement(tag); if(attrs) for(var
 function mins(t){ var p=t.split(":"); return (+p[0])*60+(+p[1]); }
 function hm(x){ var a=Math.floor(x/60), b=x%60; return a+":"+(b<10?"0":"")+b; }
 function isDay(d){ return d.getFullYear()===DAY[0]&&d.getMonth()===DAY[1]&&d.getDate()===DAY[2]; }
+/* 리허설용: 주소 끝에 ?t=1116 을 붙이면 연수 당일 그 시각부터 시계가 흐르는 것처럼 보여 줍니다. 붙이지 않으면 기기의 실제 시각을 씁니다. */
+var REH=(function(){ try{ var m=/[?&]t=(\d{1,2}):?(\d{2})(?:&|$)/.exec(location.search||""); if(!m||+m[1]>23||+m[2]>59) return null; return {shift:new Date(DAY[0],DAY[1],DAY[2],+m[1],+m[2],0).getTime()-Date.now(),at:(+m[1])+":"+m[2]}; }catch(e){ return null; } })();
+function clock(){ return REH?new Date(Date.now()+REH.shift):new Date(); }
 function nowInfo(){
-  var d=new Date(); if(!isDay(d)) return {state: (d < new Date(DAY[0],DAY[1],DAY[2]))?"before":"after"};
+  var d=clock(); if(!isDay(d)) return {state: (d < new Date(DAY[0],DAY[1],DAY[2]))?"before":"after"};
   var m=d.getHours()*60+d.getMinutes()+d.getSeconds()/60, first=mins("11:00"), last=mins("15:50");
   if(m<first) return {state:"early",left:first-m};
   if(m>=last) return {state:"after"};
@@ -501,7 +504,7 @@ function nowCard(){
   return c;
 }
 function dayCard(){
-  var n=nowInfo(), d=new Date(), m=isDay(d)?d.getHours()*60+d.getMinutes():-1;
+  var n=nowInfo(), d=clock(), m=isDay(d)?d.getHours()*60+d.getMinutes():-1;
   var wrap=h("div",{class:"day"});
   SESS.forEach(function(s){
     var box=h("div",{class:"sess"});
@@ -528,6 +531,7 @@ function viewToday(){
         h("span",{class:"ar","aria-hidden":"true",text:"→"}),
         h("div",{class:"to"},[h("span",{class:"lab"},["재설계",h("span",{class:"chip0",text:"오늘 하는 일"})]),h("b",{text:"무엇을 학습의 증거로 삼을지부터 다시 정합니다"}),h("small",{text:"목표 · 증거 · 활동 · 평가가 함께 바뀝니다"})])
       ])]),
+    REH?h("div",{class:"note",text:"리허설 보기 — 연수 당일 "+REH.at+"부터 시계가 흐르는 것처럼 표시하고 있습니다. 주소에서 ?t="+REH.at.replace(":","")+" 을 지우면 실제 시각으로 돌아갑니다."}):null,
     nowCard(),
     flowCard(),
     h("section",{class:"card"},[h("h2",{text:"이렇게 쓰시면 편합니다"}),h("div",{class:"how"},[h("div",{class:"mini"},[h("b",{text:"노트북에서, 패들렛 옆 탭으로"}),h("span",{text:"적은 내용을 복사해 패들렛 댓글과 워크시트에 바로 붙여 넣을 수 있습니다."})]),h("div",{class:"mini"},[h("b",{text:"워크시트는 파일에"}),h("span",{text:"길잡이는 순서와 도구를 보여 줍니다. 워크시트 1~4는 내려받은 파일에 작성해 패들렛에 올립니다."})]),h("div",{class:"mini"},[h("b",{text:"한 기기에서 계속"}),h("span",{text:"적은 내용과 표시는 이 기기에만 저장됩니다. 1차시에 적은 답이 4차시에 다시 나옵니다."})])])]),
